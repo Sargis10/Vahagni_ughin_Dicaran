@@ -19,13 +19,17 @@ export function getEntryBySlug(slug) {
 
 /** Unique sources cited anywhere in an entry, in first-cited order. */
 export function getSourcesForEntry(entry) {
-  const ids = [...new Set((entry.claims ?? []).flatMap((claim) => claim.sourceIds ?? []))];
+  const ids = [...new Set((entry.claims ?? []).flatMap(getClaimSourceIds))];
   return ids.map((id) => sourcesById[id]).filter(Boolean);
+}
+
+export function getClaimSourceIds(claim) {
+  return [...new Set((claim.sourceRefs ?? []).map((ref) => ref.sourceId))];
 }
 
 export function getEntriesCitingSource(sourceId) {
   return entries.filter((entry) =>
-    (entry.claims ?? []).some((claim) => claim.sourceIds?.includes(sourceId)),
+    (entry.claims ?? []).some((claim) => getClaimSourceIds(claim).includes(sourceId)),
   );
 }
 

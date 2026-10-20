@@ -58,6 +58,15 @@ export function SourcesPage() {
               </li>
             ))}
           </ul>
+          <Card variant="outlined" className="note-list note-list--needs-research">
+            <h3 className="card__title">{t.limitationsTitle}</h3>
+            <p className="muted">{t.limitationsLead}</p>
+            <ul role="list">
+              {t.limitations.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </Card>
         </div>
       </section>
     </>

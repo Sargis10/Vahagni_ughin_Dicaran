@@ -16,4 +16,4 @@ export const VERIFICATION = {
 
 export const VERIFICATION_IDS = Object.values(VERIFICATION);
 
-export const ENTRY_KINDS = ['character', 'story', 'concept'];
+export const ENTRY_KINDS = ['deity', 'legendary-king', 'clan', 'place', 'story', 'character', 'concept'];

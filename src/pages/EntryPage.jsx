@@ -12,42 +12,62 @@ import { EvidenceBadge } from '../components/ui/EvidenceBadge.jsx';
 import { PageTitle } from '../components/ui/PageTitle.jsx';
 import { paths } from '../app/navigation.js';
 
+const SCHOLARLY_SOURCE_KINDS = ['scholarly-article', 'encyclopedia'];
+
 function ClaimItem({ claim }) {
   const t = hy.entry;
-  const cited = (claim.sourceIds ?? []).map((id) => sourcesById[id]).filter(Boolean);
+  const refs = (claim.sourceRefs ?? [])
+    .map((ref) => ({ ...ref, source: sourcesById[ref.sourceId] }))
+    .filter((ref) => ref.source);
+  const scholars =
+    claim.evidenceType === EVIDENCE.SCHOLARLY
+      ? [
+          ...new Set(
+            refs
+              .filter((ref) => SCHOLARLY_SOURCE_KINDS.includes(ref.source.kind))
+              .map((ref) => ref.source.shortName),
+          ),
+        ]
+      : [];
+  const quoteSource = claim.quote ? sourcesById[claim.quote.sourceId] : null;
+
   return (
-    <li className={`claim claim--${claim.evidenceType}`}>
+    <li className={`claim claim--${claim.evidenceType}${claim.requiresCheck ? ' claim--flagged' : ''}`}>
       <div className="claim__head">
         <EvidenceBadge type={claim.evidenceType} />
+        {scholars.length > 0 && (
+          <span className="claim__scholar">
+            {t.scholarlyBy} {scholars.join(', ')}
+          </span>
+        )}
+        {claim.requiresCheck && <EvidenceBadge type={EVIDENCE.NEEDS_RESEARCH} />}
       </div>
       <p className="claim__text">{claim.text}</p>
       {claim.quote && (
-        <blockquote className="claim__quote" lang={claim.quote.lang}>
-          {claim.quote.text}
-        </blockquote>
+        <figure className="claim__quote">
+          <blockquote lang={claim.quote.lang}>«{claim.quote.text}»</blockquote>
+          <figcaption>
+            {t.quoteLabel}՝ <a href={`#source-${claim.quote.sourceId}`}>{quoteSource?.shortName}</a>,{' '}
+            {claim.quote.locator}
+          </figcaption>
+        </figure>
       )}
-      {(cited.length > 0 || claim.locator || claim.note) && (
+      {claim.requiresCheck && <p className="claim__flag">{t.requiresCheckNote}</p>}
+      {(refs.length > 0 || claim.note) && (
         <dl className="claim__meta">
-          {cited.length > 0 && (
+          {refs.length > 0 && (
             <div>
               <dt>{t.claimSources}</dt>
               <dd>
-                {cited.map((source, index) => (
-                  <span key={source.id}>
-                    {index > 0 && ', '}
-                    <a href={`#source-${source.id}`}>
-                      {source.author ? `${source.author}, ` : ''}
-                      {source.title}
-                    </a>
-                  </span>
-                ))}
+                <ul className="claim__refs" role="list">
+                  {refs.map((ref, index) => (
+                    <li key={`${ref.sourceId}-${index}`}>
+                      <a href={`#source-${ref.sourceId}`}>{ref.source.shortName}</a>
+                      {ref.locator && <span className="claim__locator">{ref.locator}</span>}
+                    </li>
+                  ))}
+                </ul>
               </dd>
-            </div>
-          )}
-          {claim.locator && (
-            <div>
-              <dt>{t.claimLocator}</dt>
-              <dd>{claim.locator}</dd>
             </div>
           )}
           {claim.note && (
@@ -59,6 +79,21 @@ function ClaimItem({ claim }) {
         </dl>
       )}
     </li>
+  );
+}
+
+function NoteList({ id, title, lead, items, tone }) {
+  if (!items?.length) return null;
+  return (
+    <section aria-labelledby={id} className={`stack note-list note-list--${tone}`}>
+      <h2 id={id}>{title}</h2>
+      {lead && <p className="muted">{lead}</p>}
+      <ul role="list">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -91,6 +126,8 @@ export function EntryPage() {
 
   const entrySources = getSourcesForEntry(entry);
   const related = getRelatedEntries(entry);
+  const checkedClaims = entry.claims.filter((claim) => claim.evidenceType !== EVIDENCE.NEEDS_RESEARCH);
+  const uncheckedClaims = entry.claims.filter((claim) => claim.evidenceType === EVIDENCE.NEEDS_RESEARCH);
   const notice =
     entry.evidenceType === EVIDENCE.FICTIONAL
       ? t.fictionalNotice
@@ -140,16 +177,41 @@ export function EntryPage() {
 
             <section aria-labelledby="claims-title" className="stack">
               <h2 id="claims-title">{t.claimsTitle}</h2>
-              {entry.claims.length === 0 ? (
+              {checkedClaims.length === 0 ? (
                 <p className="muted">{t.claimsEmpty}</p>
               ) : (
                 <ul className="claim-list" role="list">
-                  {entry.claims.map((claim) => (
+                  {checkedClaims.map((claim) => (
                     <ClaimItem key={claim.id} claim={claim} />
                   ))}
                 </ul>
               )}
             </section>
+
+            {uncheckedClaims.length > 0 && (
+              <section aria-labelledby="unverified-title" className="stack unverified-block">
+                <h2 id="unverified-title">{t.unverifiedTitle}</h2>
+                <p className="muted">{t.unverifiedLead}</p>
+                <ul className="claim-list" role="list">
+                  {uncheckedClaims.map((claim) => (
+                    <ClaimItem key={claim.id} claim={claim} />
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            <NoteList
+              id="disagreements-title"
+              title={t.disagreementsTitle}
+              items={entry.disagreements}
+              tone="scholarly-interpretation"
+            />
+            <NoteList
+              id="open-questions-title"
+              title={t.openQuestionsTitle}
+              items={entry.openQuestions}
+              tone="needs-research"
+            />
 
             {entry.chapterIds?.length > 0 && (
               <section aria-labelledby="chapter-title" className="stack">
@@ -173,7 +235,7 @@ export function EntryPage() {
             ) : (
               <div className="stack">
                 {entrySources.map((source) => (
-                  <SourceCard key={source.id} source={source} />
+                  <SourceCard key={source.id} source={source} compact />
                 ))}
               </div>
             )}

@@ -51,14 +51,24 @@ export function validateContent({ sources, entries }) {
       if (!claim.text) errors.push(`${at} has no text`);
       if (!EVIDENCE_IDS.includes(claim.evidenceType)) errors.push(`${at} has unknown evidence type`);
 
-      for (const sourceId of claim.sourceIds ?? []) {
-        if (!sourceIds.has(sourceId)) errors.push(`${at} cites missing source "${sourceId}"`);
+      if (!Array.isArray(claim.sourceRefs)) errors.push(`${at} has no sourceRefs list`);
+      for (const ref of claim.sourceRefs ?? []) {
+        if (!sourceIds.has(ref.sourceId)) errors.push(`${at} cites missing source "${ref.sourceId}"`);
+      }
+      if (claim.quote) {
+        if (!claim.quote.text) errors.push(`${at} has an empty quote`);
+        if (!sourceIds.has(claim.quote.sourceId) || !claim.quote.locator) {
+          errors.push(`${at} has a quote without a source and locator`);
+        }
       }
 
       const needsSource =
         claim.evidenceType === EVIDENCE.PRIMARY || claim.evidenceType === EVIDENCE.SCHOLARLY;
-      if (needsSource && !(claim.sourceIds?.length > 0)) {
+      if (needsSource && !(claim.sourceRefs?.length > 0)) {
         errors.push(`${at} is presented as evidence but cites no source`);
+      }
+      if (claim.evidenceType === EVIDENCE.NEEDS_RESEARCH && claim.quote) {
+        errors.push(`${at} quotes a source for an unverified claim`);
       }
       if (entry.evidenceType === EVIDENCE.FICTIONAL && claim.evidenceType !== EVIDENCE.FICTIONAL) {
         errors.push(`${at} is non-fictional inside a fictional entry`);
@@ -66,7 +76,7 @@ export function validateContent({ sources, entries }) {
     }
 
     if (entry.evidenceType !== EVIDENCE.FICTIONAL && entry.evidenceType !== EVIDENCE.NEEDS_RESEARCH) {
-      const hasSourcedClaim = (entry.claims ?? []).some((claim) => claim.sourceIds?.length > 0);
+      const hasSourcedClaim = (entry.claims ?? []).some((claim) => claim.sourceRefs?.length > 0);
       if (!hasSourcedClaim) errors.push(`${where} is marked as evidence but has no sourced claim`);
     }
   }
