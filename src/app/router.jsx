@@ -6,6 +6,7 @@ import { ArchivePage } from '../pages/ArchivePage.jsx';
 import { EntryPage } from '../pages/EntryPage.jsx';
 import { MapPage } from '../pages/MapPage.jsx';
 import { GamePage } from '../pages/GamePage.jsx';
+import { ProgressPage } from '../pages/ProgressPage.jsx';
 import { SourcesPage } from '../pages/SourcesPage.jsx';
 import { NotFoundPage } from '../pages/NotFoundPage.jsx';
 import { RouteErrorPage } from '../pages/RouteErrorPage.jsx';
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: `${paths.archive}/:slug`, element: <EntryPage /> },
       { path: paths.map, element: <MapPage /> },
       { path: paths.game, element: <GamePage /> },
+      { path: paths.progress, element: <ProgressPage /> },
       { path: paths.sources, element: <SourcesPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

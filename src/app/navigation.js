@@ -5,6 +5,7 @@ export const paths = {
   archive: '/archive',
   map: '/map',
   game: '/play',
+  progress: '/progress',
   sources: '/sources',
 };
 
@@ -13,5 +14,6 @@ export const navItems = [
   { to: paths.archive, label: hy.nav.archive },
   { to: paths.map, label: hy.nav.map },
   { to: paths.game, label: hy.nav.game },
+  { to: paths.progress, label: hy.nav.progress },
   { to: paths.sources, label: hy.nav.sources },
 ];
