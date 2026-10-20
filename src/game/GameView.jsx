@@ -1,6 +1,6 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { useProgress as useLoadingProgress } from '@react-three/drei';
+import { PerformanceMonitor, useProgress as useLoadingProgress } from '@react-three/drei';
 import * as THREE from 'three';
 import { Link } from 'react-router';
 import hy from '../i18n/hy.js';
@@ -19,6 +19,7 @@ import { FragmentCard } from './hud/FragmentCard.jsx';
 import { QuizPanel } from './hud/QuizPanel.jsx';
 import { ChoicePanel } from './hud/ChoicePanel.jsx';
 import { CompletionOverlay } from './hud/CompletionOverlay.jsx';
+import { useModalFocusTrap } from './hud/useModalFocusTrap.js';
 import { getQuizQuestions } from './chapters/chapter1.js';
 import { spawn } from './world/layout.js';
 import { getEntryBySlug } from '../content/index.js';
@@ -66,8 +67,8 @@ function defaultQuality() {
 }
 
 const QUALITY = {
-  high: { dpr: [1, 1.75], shadows: true, shadowMap: 2048 },
-  low: { dpr: [1, 1.25], shadows: true, shadowMap: 1024 },
+  high: { dpr: [1, 1.75], shadows: true, shadowMap: 2048, detail: 'high' },
+  low: { dpr: [1, 1.25], shadows: true, shadowMap: 1024, detail: 'low' },
 };
 
 function LoadingBar() {
@@ -87,6 +88,8 @@ export default function GameView({ chapter, script, restartOnMount = false, onRe
   const t = hy.play;
   const { progress, dispatch } = useProgress();
   const runtime = useRef(null);
+  const viewRef = useRef(null);
+  useModalFocusTrap(viewRef);
   if (runtime.current === null) runtime.current = createRuntime();
   if (import.meta.env.DEV) window.__vahagnGame = runtime.current;
 
@@ -95,6 +98,10 @@ export default function GameView({ chapter, script, restartOnMount = false, onRe
   const coarsePointer = useMediaQuery('(pointer: coarse)');
   const portrait = useMediaQuery('(orientation: portrait)');
   const [quality, setQuality] = useState(defaultQuality);
+  const qualityChosen = useRef(false);
+  const lowerQuality = useCallback(() => {
+    if (!qualityChosen.current) setQuality('low');
+  }, []);
   const { active: loadingActive, progress: loadingProgress } = useLoadingProgress();
   const ready = !loadingActive && loadingProgress >= 100;
 
@@ -291,19 +298,23 @@ export default function GameView({ chapter, script, restartOnMount = false, onRe
   const settings = QUALITY[quality];
 
   return (
-    <div className={`game-view${coarsePointer ? ' game-view--touch' : ''}`}>
+    <div ref={viewRef} className={`game-view${coarsePointer ? ' game-view--touch' : ''}`}>
       <Canvas
         className="game-canvas"
         shadows={settings.shadows ? 'soft' : false}
         dpr={settings.dpr}
+        frameloop={mode === 'paused' ? 'demand' : 'always'}
         camera={{ fov: portrait ? 60 : 50, near: 0.1, far: 700, position: [0, 6, 20] }}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.toneMappingExposure = 1.05;
+          if (import.meta.env.DEV) runtime.current.renderer = gl;
         }}
+        role="img"
         aria-label={t.canvasLabel}
       >
+        <PerformanceMonitor onDecline={lowerQuality} onFallback={lowerQuality} flipflops={3} />
         <Suspense fallback={null}>
           <GameScene
             runtime={runtime.current}
@@ -401,7 +412,10 @@ export default function GameView({ chapter, script, restartOnMount = false, onRe
           onRestart={restart}
           canRestart={progress.completedObjectives.some((key) => key.startsWith(`${script.id}:`))}
           quality={quality}
-          onToggleQuality={() => setQuality(quality === 'high' ? 'low' : 'high')}
+          onToggleQuality={() => {
+            qualityChosen.current = true;
+            setQuality(quality === 'high' ? 'low' : 'high');
+          }}
         />
       )}
       {mode !== 'intro' && <LoadingBar />}

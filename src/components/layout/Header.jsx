@@ -22,11 +22,12 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container site-header__inner">
-        <Link to={paths.home} className="brand" aria-label={hy.a11y.homeLink} onClick={closeMenu}>
+        <Link to={paths.home} className="brand" onClick={closeMenu}>
           <Rosette size={34} className="brand__mark" />
           <span className="brand__text">
-            <span className="brand__title">{hy.site.title}</span>
+            <span className="brand__title">{hy.site.title}</span>{' '}
             <span className="brand__subtitle">{hy.site.subtitle}</span>
+            <span className="visually-hidden"> — {hy.a11y.homePage}</span>
           </span>
         </Link>
 
