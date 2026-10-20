@@ -52,7 +52,7 @@ export function GameScene({
       <Mountains />
       <Campfire position={[hearth.x, terrainHeight(hearth.x, hearth.z), hearth.z]} reducedMotion={reducedMotion} />
       <Suspense fallback={null}>
-        <Environment reducedMotion={reducedMotion} />
+        <Environment reducedMotion={reducedMotion} detail={quality.detail} />
         <Storyteller runtime={runtime} talking={talkingTo === 'storyteller'} />
         <Player runtime={runtime} interactables={interactables} onNearestChange={onNearestChange} />
       </Suspense>

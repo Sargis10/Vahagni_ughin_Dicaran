@@ -24,6 +24,9 @@ const flowerSplit = [flowers.filter((_, i) => i % 2 === 0), flowers.filter((_, i
 const lilyItems = lilies.map((lily) => ({ ...lily, y: -0.3 }));
 const reedItems = reeds.map((reed) => ({ ...reed, s: reed.s * 0.95, sx: 0.45, sy: 1.15 }));
 const propGroups = groupByModel(props);
+const thin = (list) => list.filter((_, i) => i % 2 === 0);
+const sparseGrass = grassSplit.map(thin);
+const sparseFlowers = flowerSplit.map(thin);
 
 function Wind({ reducedMotion }) {
   useFrame((_, delta) => {
@@ -32,7 +35,11 @@ function Wind({ reducedMotion }) {
   return null;
 }
 
-export function Environment({ reducedMotion }) {
+/** `detail` "low" halves the decorative ground cover and drops tree shadows for weaker devices. */
+export function Environment({ reducedMotion, detail = 'high' }) {
+  const low = detail === 'low';
+  const grassItems = low ? sparseGrass : grassSplit;
+  const flowerItems = low ? sparseFlowers : flowerSplit;
   return (
     <>
       <Wind reducedMotion={reducedMotion} />
@@ -40,14 +47,21 @@ export function Environment({ reducedMotion }) {
         <InstancedModel key={model} name={model} items={items} getY={terrainHeight} />
       ))}
       {forestByModel.map(([model, items]) => (
-        <InstancedModel key={`forest-${model}`} name={model} items={items} getY={terrainHeight} receiveShadow={false} />
+        <InstancedModel
+          key={`forest-${model}`}
+          name={model}
+          items={items}
+          getY={terrainHeight}
+          castShadow={!low}
+          receiveShadow={false}
+        />
       ))}
       <InstancedModel name="path_stone" items={stones} getY={terrainHeight} castShadow={false} />
       <InstancedModel name="crops_bambooStageB" items={reedItems} getY={terrainHeight} wind={0.16} color="#a19a5c" />
-      <InstancedModel name="grass" items={grassSplit[0]} getY={terrainHeight} wind={0.1} castShadow={false} />
-      <InstancedModel name="grass_large" items={grassSplit[1]} getY={terrainHeight} wind={0.1} castShadow={false} />
-      <InstancedModel name="flower_redA" items={flowerSplit[0]} getY={terrainHeight} wind={0.12} castShadow={false} />
-      <InstancedModel name="flower_yellowA" items={flowerSplit[1]} getY={terrainHeight} wind={0.12} castShadow={false} />
+      <InstancedModel name="grass" items={grassItems[0]} getY={terrainHeight} wind={0.1} castShadow={false} />
+      <InstancedModel name="grass_large" items={grassItems[1]} getY={terrainHeight} wind={0.1} castShadow={false} />
+      <InstancedModel name="flower_redA" items={flowerItems[0]} getY={terrainHeight} wind={0.12} castShadow={false} />
+      <InstancedModel name="flower_yellowA" items={flowerItems[1]} getY={terrainHeight} wind={0.12} castShadow={false} />
       <InstancedModel name="lily_large" items={lilyItems} castShadow={false} />
     </>
   );

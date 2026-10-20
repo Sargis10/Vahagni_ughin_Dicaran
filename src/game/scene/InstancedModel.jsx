@@ -50,7 +50,7 @@ export function InstancedModel({ name, items, wind = 0, color, castShadow = true
   if (items.length === 0) return null;
   return parts.map((part, index) => (
     <InstancedPart
-      key={index}
+      key={`${index}-${items.length}`}
       part={part}
       items={items}
       wind={wind}
