@@ -2,10 +2,18 @@ import { createInitialProgress } from './rules.js';
 
 export const STORAGE_KEY = 'vahagni-ughin.progress';
 export const BACKUP_KEY = 'vahagni-ughin.progress.backup';
-export const CURRENT_VERSION = 1;
+export const CURRENT_VERSION = 2;
 
 // Each entry upgrades data from version N to N + 1.
-const migrations = {};
+// v1 → v2: chapter objectives, quiz answers and choices were added.
+export const migrations = {
+  1: (data) => ({
+    ...data,
+    completedObjectives: [],
+    quizAnswers: {},
+    choices: {},
+  }),
+};
 
 function isStringArray(value) {
   return Array.isArray(value) && value.every((item) => typeof item === 'string');
@@ -13,6 +21,11 @@ function isStringArray(value) {
 
 function uniqueStrings(value) {
   return isStringArray(value) ? [...new Set(value)] : [];
+}
+
+function stringMap(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value).filter(([, v]) => typeof v === 'string'));
 }
 
 /** Coerces stored data into a valid progress object, dropping anything malformed. */
@@ -26,6 +39,9 @@ export function sanitizeProgress(data) {
     badges: uniqueStrings(data.badges),
     discoveredEntries: uniqueStrings(data.discoveredEntries),
     completedChapters: uniqueStrings(data.completedChapters),
+    completedObjectives: uniqueStrings(data.completedObjectives),
+    quizAnswers: stringMap(data.quizAnswers),
+    choices: stringMap(data.choices),
     rewardsGranted: uniqueStrings(data.rewardsGranted),
   };
 }

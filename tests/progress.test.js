@@ -47,6 +47,66 @@ describe('rewards', () => {
   });
 });
 
+describe('chapter rules', () => {
+  it('completes an objective once and rewards once', () => {
+    let s = reduceProgress(createInitialProgress(), { type: 'complete-objective', chapterId: 'c', objectiveId: 'o', reward: { xp: 10 } });
+    s = reduceProgress(s, { type: 'complete-objective', chapterId: 'c', objectiveId: 'o', reward: { xp: 10 } });
+    expect(s.completedObjectives).toEqual(['c:o']);
+    expect(s.xp).toBe(10);
+  });
+
+  it('rewards only the first correct answer', () => {
+    let s = createInitialProgress();
+    s = reduceProgress(s, { type: 'answer-question', questionKey: 'c:q1', optionId: 'wrong', isCorrect: false, reward: { xp: 10 } });
+    expect(s.xp).toBe(0);
+    s = reduceProgress(s, { type: 'answer-question', questionKey: 'c:q1', optionId: 'right', isCorrect: true, reward: { xp: 10 } });
+    s = reduceProgress(s, { type: 'answer-question', questionKey: 'c:q1', optionId: 'right', isCorrect: true, reward: { xp: 10 } });
+    expect(s.xp).toBe(10);
+    expect(s.quizAnswers['c:q1']).toBe('right');
+  });
+
+  it('keeps the first choice', () => {
+    let s = reduceProgress(createInitialProgress(), { type: 'make-choice', choiceKey: 'c:x', optionId: 'a', reward: { badge: 'A' } });
+    s = reduceProgress(s, { type: 'make-choice', choiceKey: 'c:x', optionId: 'b', reward: { badge: 'B' } });
+    expect(s.choices['c:x']).toBe('a');
+    expect(s.badges).toEqual(['A']);
+  });
+
+  it('resetting a chapter keeps rewards so replays cannot farm xp', () => {
+    let s = createInitialProgress();
+    s = reduceProgress(s, { type: 'complete-objective', chapterId: 'c', objectiveId: 'o', reward: { xp: 10 } });
+    s = reduceProgress(s, { type: 'make-choice', choiceKey: 'c:x', optionId: 'a' });
+    s = reduceProgress(s, { type: 'complete-objective', chapterId: 'other', objectiveId: 'o' });
+    s = reduceProgress(s, { type: 'reset-chapter', chapterId: 'c' });
+    expect(s.completedObjectives).toEqual(['other:o']);
+    expect(s.choices).toEqual({});
+    s = reduceProgress(s, { type: 'complete-objective', chapterId: 'c', objectiveId: 'o', reward: { xp: 10 } });
+    expect(s.xp).toBe(10);
+  });
+});
+
+describe('migration', () => {
+  it('upgrades version 1 saves without losing data', () => {
+    const v1 = JSON.stringify({
+      version: 1,
+      data: { xp: 25, badges: ['x'], discoveredEntries: ['vahagn'], completedChapters: [], rewardsGranted: ['discover:vahagn'] },
+    });
+    const { progress, status } = parseStored(v1);
+    expect(status).toBe('migrated');
+    expect(progress.xp).toBe(25);
+    expect(progress.discoveredEntries).toEqual(['vahagn']);
+    expect(progress.completedObjectives).toEqual([]);
+    expect(progress.quizAnswers).toEqual({});
+  });
+
+  it('drops malformed answer maps', () => {
+    expect(sanitizeProgress({ quizAnswers: ['a'], choices: { a: 1, b: 'ok' } })).toMatchObject({
+      quizAnswers: {},
+      choices: { b: 'ok' },
+    });
+  });
+});
+
 describe('levels', () => {
   it('computes level and progress within the level', () => {
     expect(getLevel(0).level).toBe(1);
