@@ -123,7 +123,7 @@ export const sources = [
     rights: 'Թարգմանչի իրավունքի կարգավիճակը չի ստուգվել։',
     urls: {
       catalog: 'https://arar.sci.am/dlibra/publication/302556/edition/277023?language=hye',
-      pdf: 'http://arar.sci.am/Content/277023/Movses+Xorenaci.pdf',
+      pdf: 'http://arar.sci.am/Content/277023/Movses%20Xorenaci.pdf',
     },
     verification: {
       status: VERIFICATION.UNVERIFIED,
