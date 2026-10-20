@@ -1,0 +1,97 @@
+:root {
+  /* Palette */
+  --color-charcoal-950: #0f0d0f;
+  --color-charcoal-900: #151215;
+  --color-charcoal-800: #1e1a1d;
+  --color-charcoal-700: #2a2428;
+  --color-charcoal-600: #3a3236;
+
+  --color-burgundy-900: #3d0f17;
+  --color-burgundy-700: #6e1c29;
+  --color-burgundy-600: #8c2a37;
+  --color-burgundy-500: #a33a47;
+
+  --color-stone-100: #f3ece2;
+  --color-stone-200: #e4d8c7;
+  --color-stone-300: #cbbba5;
+  --color-stone-400: #a8977f;
+  --color-stone-500: #85765f;
+
+  --color-gold-300: #e3c88f;
+  --color-gold-400: #c9a45c;
+  --color-gold-500: #a8843f;
+
+  /* Semantic colors (text contrast on --color-bg is ≥ 4.5:1 for all text tokens) */
+  --color-bg: var(--color-charcoal-900);
+  --color-bg-raised: var(--color-charcoal-800);
+  --color-bg-sunken: var(--color-charcoal-950);
+  --color-surface: var(--color-charcoal-700);
+  --color-border: var(--color-charcoal-600);
+  --color-border-strong: #54494e;
+
+  --color-text: var(--color-stone-100);
+  --color-text-muted: var(--color-stone-300);
+  --color-text-subtle: var(--color-stone-400);
+  --color-accent: var(--color-gold-400);
+  --color-accent-strong: var(--color-gold-300);
+  --color-primary: var(--color-burgundy-600);
+  --color-primary-hover: var(--color-burgundy-500);
+  --color-on-primary: var(--color-stone-100);
+
+  --color-evidence-primary: #9fbf8f;
+  --color-evidence-scholarly: #8fb1cf;
+  --color-evidence-fictional: #d6a1c9;
+  --color-evidence-research: var(--color-gold-300);
+
+  --color-focus: var(--color-gold-300);
+
+  /* Typography */
+  --font-serif: 'Noto Serif Armenian', 'Sylfaen', Georgia, serif;
+  --font-sans: 'Noto Sans Armenian', 'Arial', system-ui, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 3vw, 4rem);
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* Spacing (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Shape and depth */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -16px rgb(0 0 0 / 0.6);
+
+  /* Layout */
+  --container-max: 72rem;
+  --container-narrow: 46rem;
+  --header-height: 4.25rem;
+
+  /* Motion */
+  --duration-fast: 140ms;
+  --duration-base: 240ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+  }
+}
