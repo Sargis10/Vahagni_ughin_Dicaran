@@ -1,5 +1,6 @@
 import hy from '../i18n/hy.js';
-import { Badge } from '../components/ui/Badge.jsx';
+import { getEntriesCitingSource, sources } from '../content/index.js';
+import { SourceCard } from '../components/archive/SourceCard.jsx';
 import { Card } from '../components/ui/Card.jsx';
 import { EvidenceTypeList } from '../components/ui/EvidenceTypeList.jsx';
 import { PageTitle } from '../components/ui/PageTitle.jsx';
@@ -44,16 +45,19 @@ export function SourcesPage() {
       </section>
 
       <section className="section" aria-labelledby="source-list-title">
-        <div className="container container--narrow">
+        <div className="container container--narrow stack">
+          <SectionHeading id="source-list-title" title={t.listTitle} lead={t.listLead} />
           <Card variant="outlined">
-            <div className="card__header">
-              <h2 id="source-list-title" className="card__title">
-                {t.listTitle}
-              </h2>
-              <Badge tone="research">{t.listStatus}</Badge>
-            </div>
-            <p className="muted">{t.listText}</p>
+            <h3 className="card__title">{t.verificationTitle}</h3>
+            <p className="muted">{t.verificationLead}</p>
           </Card>
+          <ul className="stack source-list" role="list">
+            {sources.map((source) => (
+              <li key={source.id}>
+                <SourceCard source={source} citedBy={getEntriesCitingSource(source.id)} />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </>

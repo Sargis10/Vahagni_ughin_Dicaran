@@ -3,6 +3,7 @@ import { Layout } from './Layout.jsx';
 import { paths } from './navigation.js';
 import { HomePage } from '../pages/HomePage.jsx';
 import { ArchivePage } from '../pages/ArchivePage.jsx';
+import { EntryPage } from '../pages/EntryPage.jsx';
 import { MapPage } from '../pages/MapPage.jsx';
 import { GamePage } from '../pages/GamePage.jsx';
 import { SourcesPage } from '../pages/SourcesPage.jsx';
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: paths.archive, element: <ArchivePage /> },
+      { path: `${paths.archive}/:slug`, element: <EntryPage /> },
       { path: paths.map, element: <MapPage /> },
       { path: paths.game, element: <GamePage /> },
       { path: paths.sources, element: <SourcesPage /> },

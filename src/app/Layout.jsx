@@ -3,6 +3,7 @@ import { Outlet, ScrollRestoration, useLocation } from 'react-router';
 import hy from '../i18n/hy.js';
 import { Header } from '../components/layout/Header.jsx';
 import { Footer } from '../components/layout/Footer.jsx';
+import { ProgressNotices } from '../components/layout/ProgressNotices.jsx';
 
 export function Layout() {
   const { pathname } = useLocation();
@@ -24,6 +25,7 @@ export function Layout() {
         {hy.a11y.skipToContent}
       </a>
       <Header />
+      <ProgressNotices />
       <main id="main" ref={mainRef} tabIndex={-1} className="site-main">
         <Outlet />
       </main>
