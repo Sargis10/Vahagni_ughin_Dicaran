@@ -10,6 +10,7 @@ import './styles/components.css';
 import './styles/pages.css';
 import './styles/archive.css';
 import './styles/map.css';
+import './styles/game.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

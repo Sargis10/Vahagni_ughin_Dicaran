@@ -39,6 +39,13 @@ export function Footer() {
             </a>
             )
           </p>
+          <p className="muted">
+            {hy.footer.modelsCredit} (
+            <a href="/models/LICENSES.md" target="_blank" rel="noopener">
+              {hy.footer.modelsLicense}
+            </a>
+            )
+          </p>
         </div>
       </div>
       <div className="container site-footer__bottom">

@@ -26,6 +26,15 @@ export default defineConfig([
     },
   },
   {
+    // The render loop (useFrame) and input handlers mutate a shared per-frame runtime object
+    // and three.js uniforms on purpose, outside React state, to avoid re-rendering every frame.
+    files: ['src/game/**/*.{js,jsx}'],
+    rules: {
+      'react-hooks/immutability': 'off',
+      'react-hooks/refs': 'off',
+    },
+  },
+  {
     files: ['*.config.js'],
     languageOptions: { globals: globals.node },
   },
