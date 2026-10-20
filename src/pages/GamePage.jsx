@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import hy from '../i18n/hy.js';
 import { paths } from '../app/navigation.js';
@@ -81,7 +81,7 @@ function GameLanding() {
                       {done && <Badge tone="verified">{t.completed}</Badge>}
                     </div>
                     <p>{t.chapterText}</p>
-                    <ButtonLink to={`${paths.game}?chapter=${chapter.id}`} size="lg">
+                    <ButtonLink to={`${paths.game}?chapter=${chapter.id}${done ? '&restart=1' : ''}`} size="lg">
                       {done ? t.replay : started ? t.continue : t.start}
                     </ButtonLink>
                   </article>
@@ -102,8 +102,19 @@ function GameLanding() {
 }
 
 export function GamePage() {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const chapterId = params.get('chapter');
+  const [restartOnMount] = useState(() => params.get('restart') === '1');
+  const clearRestart = useCallback(() => {
+    setParams(
+      (current) => {
+        const next = new URLSearchParams(current);
+        next.delete('restart');
+        return next;
+      },
+      { replace: true },
+    );
+  }, [setParams]);
   const [hasWebGL] = useState(detectWebGL);
   const chapter = chapterId ? chaptersById[chapterId] : null;
   const script = chapterId ? chaptersScripts[chapterId] : null;
@@ -137,7 +148,7 @@ export function GamePage() {
       <h1 className="visually-hidden">{chapter.title}</h1>
       {hasWebGL ? (
         <Suspense fallback={<GameLoading />}>
-          <GameView chapter={chapter} script={script} />
+          <GameView chapter={chapter} script={script} restartOnMount={restartOnMount} onRestarted={clearRestart} />
         </Suspense>
       ) : (
         <NoWebGL />

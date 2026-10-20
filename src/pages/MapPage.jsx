@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import hy from '../i18n/hy.js';
+import { paths } from '../app/navigation.js';
 import { locations, locationsById } from '../content/locations.js';
 import { chaptersById } from '../content/chapters.js';
 import { getEntryById } from '../content/index.js';
@@ -20,7 +21,7 @@ function LocationAction({ location, status }) {
     const chapter = chaptersById[location.action.chapterId];
     const label = status === LOCATION_STATUS.COMPLETED ? t.replayChapter : t.startChapter;
     return (
-      <ButtonLink to={`/play?chapter=${chapter.id}`}>
+      <ButtonLink to={`${paths.game}?chapter=${chapter.id}${status === LOCATION_STATUS.COMPLETED ? '&restart=1' : ''}`}>
         {label}
       </ButtonLink>
     );

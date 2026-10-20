@@ -15,7 +15,13 @@ import { IntroOverlay } from './hud/IntroOverlay.jsx';
 import { PauseMenu } from './hud/PauseMenu.jsx';
 import { TouchControls } from './hud/TouchControls.jsx';
 import { ObjectiveTracker } from './hud/ObjectiveTracker.jsx';
+import { FragmentCard } from './hud/FragmentCard.jsx';
+import { QuizPanel } from './hud/QuizPanel.jsx';
+import { ChoicePanel } from './hud/ChoicePanel.jsx';
+import { CompletionOverlay } from './hud/CompletionOverlay.jsx';
+import { getQuizQuestions } from './chapters/chapter1.js';
 import { spawn } from './world/layout.js';
+import { getEntryBySlug } from '../content/index.js';
 
 preloadGameAssets();
 
@@ -77,7 +83,7 @@ function LoadingBar() {
   );
 }
 
-export default function GameView({ chapter, script }) {
+export default function GameView({ chapter, script, restartOnMount = false, onRestarted }) {
   const t = hy.play;
   const { progress, dispatch } = useProgress();
   const runtime = useRef(null);
@@ -92,60 +98,111 @@ export default function GameView({ chapter, script }) {
   const { active: loadingActive, progress: loadingProgress } = useLoadingProgress();
   const ready = !loadingActive && loadingProgress >= 100;
 
-  const [mode, setMode] = useState(() => (state.isDone(script.objectives[0].id) ? 'play' : 'intro'));
+  const [mode, setMode] = useState(() =>
+    restartOnMount || !state.isDone(script.objectives[0].id) ? 'intro' : 'play',
+  );
   const [dialogue, setDialogue] = useState(null);
+  const [panel, setPanel] = useState(null);
   const [nearestId, setNearestId] = useState(null);
+  const questions = useMemo(() => getQuizQuestions(), []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.add('is-playing');
+    window.scrollTo(0, 0);
+    return () => root.classList.remove('is-playing');
+  }, []);
+
+  const restartHandled = useRef(false);
+  useEffect(() => {
+    if (!restartOnMount || restartHandled.current) return;
+    restartHandled.current = true;
+    dispatch({ type: 'reset-chapter', chapterId: script.id, silent: true });
+    onRestarted?.();
+  }, [restartOnMount, dispatch, script.id, onRestarted]);
 
   const interactables = useMemo(
     () => script.interactables.map((item) => ({ ...item, active: script.isInteractableActive(item.id, state) })),
     [script, state],
   );
   const nearest = interactables.find((item) => item.id === nearestId) ?? null;
-  const markerTarget = state.current ? interactables.find((item) => item.id === state.current.target) : null;
+  const fragmentStones = useMemo(
+    () => script.fragments.map((f) => ({ id: f.id, position: f.position, collected: state.isDone(f.id) })),
+    [script, state],
+  );
+  const reedActive = interactables.find((item) => item.id === 'red-reed')?.active ?? false;
 
-  const playing = mode === 'play' && !dialogue;
+  const playing = mode === 'play' && !dialogue && !panel;
+  const markers = playing
+    ? script.markerTargets(state).map((id) => interactables.find((item) => item.id === id)).filter(Boolean)
+    : [];
+
   useEffect(() => {
     runtime.current.locked = !playing;
   }, [playing]);
 
-  const runEffects = useCallback(
-    (effects = []) => {
-      for (const effect of effects) {
-        if (effect.type === 'complete-objective') {
-          const objective = script.objectives.find((o) => o.id === effect.objectiveId);
-          dispatch({
-            type: 'complete-objective',
-            chapterId: script.id,
-            objectiveId: effect.objectiveId,
-            reward: objective?.reward,
-          });
-        }
-      }
+  const completeObjective = useCallback(
+    (objectiveId) => {
+      const objective = script.objectives.find((o) => o.id === objectiveId);
+      const parent = script.objectives.find((o) => o.parts?.includes(objectiveId));
+      dispatch({
+        type: 'complete-objective',
+        chapterId: script.id,
+        objectiveId,
+        reward: objective?.reward ?? parent?.partReward,
+      });
     },
     [dispatch, script],
   );
 
-  const closeDialogue = useCallback(() => {
-    setDialogue(null);
+  const runEffects = useCallback(
+    (effects = []) => {
+      for (const effect of effects) {
+        if (effect.type === 'complete-objective') completeObjective(effect.objectiveId);
+        if (effect.type === 'open-choice') setPanel({ type: 'choice' });
+        if (effect.type === 'complete-chapter') {
+          dispatch({ type: 'complete-chapter', chapterId: script.id, reward: script.rewards.chapter });
+          setPanel({ type: 'complete' });
+        }
+      }
+    },
+    [completeObjective, dispatch, script],
+  );
+
+  const releaseCamera = useCallback(() => {
     runtime.current.faceTarget = null;
     runtime.current.focus = null;
     runtime.current.focusYaw = null;
   }, []);
 
+  const closeDialogue = useCallback(() => {
+    setDialogue(null);
+    releaseCamera();
+  }, [releaseCamera]);
+
+  const lookAt = useCallback((target) => {
+    const { player } = runtime.current;
+    runtime.current.faceTarget = target.position;
+    runtime.current.focus = { x: (player.x + target.position.x) / 2, z: (player.z + target.position.z) / 2 };
+    runtime.current.focusYaw = sideViewYaw(player, target.position, runtime.current.camera.yaw);
+  }, []);
+
+  const openDialogue = useCallback(
+    (id, withId) => {
+      setDialogue({ id, index: 0, with: withId });
+    },
+    [],
+  );
+
   const interact = useCallback(() => {
     if (!playing || !nearest) return;
     const action = script.resolveInteraction(nearest.id, state);
-    if (action?.type === 'dialogue') {
-      setDialogue({ id: action.id, index: 0, with: nearest.id });
-      runtime.current.faceTarget = nearest.position;
-      const { player } = runtime.current;
-      runtime.current.focus = {
-        x: (player.x + nearest.position.x) / 2,
-        z: (player.z + nearest.position.z) / 2,
-      };
-      runtime.current.focusYaw = sideViewYaw(player, nearest.position, runtime.current.camera.yaw);
-    }
-  }, [playing, nearest, script, state]);
+    if (!action) return;
+    lookAt(nearest);
+    if (action.type === 'dialogue') openDialogue(action.id, nearest.id);
+    if (action.type === 'fragment') setPanel({ type: 'fragment', id: action.id });
+    if (action.type === 'quiz') setPanel({ type: 'quiz' });
+  }, [playing, nearest, script, state, lookAt, openDialogue]);
 
   const advanceDialogue = useCallback(() => {
     if (!dialogue) return;
@@ -154,28 +211,83 @@ export default function GameView({ chapter, script }) {
       setDialogue({ ...dialogue, index: dialogue.index + 1 });
       return;
     }
-    closeDialogue();
+    const keepFocus = definition.onComplete?.some((effect) => effect.type === 'open-choice');
+    setDialogue(null);
+    if (!keepFocus) releaseCamera();
     runEffects(definition.onComplete);
-  }, [dialogue, script, closeDialogue, runEffects]);
+  }, [dialogue, script, releaseCamera, runEffects]);
+
+  const closePanel = useCallback(() => {
+    setPanel(null);
+    releaseCamera();
+  }, [releaseCamera]);
+
+  const keepFragment = useCallback(() => {
+    if (panel?.type !== 'fragment') return;
+    const fragment = script.fragments.find((f) => f.id === panel.id);
+    completeObjective(panel.id);
+    const entry = fragment ? getEntryBySlug(fragment.entrySlug) : null;
+    if (entry) dispatch({ type: 'discover-entry', entryId: entry.id });
+    closePanel();
+  }, [panel, script, completeObjective, dispatch, closePanel]);
 
   const togglePause = useCallback(() => {
     if (dialogue) {
       closeDialogue();
       return;
     }
-    setMode((current) => (current === 'paused' ? 'play' : current === 'play' ? 'paused' : current));
-  }, [dialogue, closeDialogue]);
+    if (panel && panel.type !== 'complete' && panel.type !== 'choice') {
+      if (panel.type === 'fragment') keepFragment();
+      else closePanel();
+      return;
+    }
+    setMode((current) => (current === 'paused' ? 'play' : current === 'play' && !panel ? 'paused' : current));
+  }, [dialogue, panel, closeDialogue, closePanel, keepFragment]);
 
   useKeyboardInput(runtime.current.input, { onInteract: interact, onPause: togglePause });
 
   const restart = () => {
-    dispatch({ type: 'reset-chapter', chapterId: script.id });
-    runtime.current = createRuntime();
+    dispatch({ type: 'reset-chapter', chapterId: script.id, silent: true });
+    Object.assign(runtime.current.player, { x: spawn.x, z: spawn.z, rotation: spawn.rotation });
+    runtime.current.camera.yaw = 0;
+    releaseCamera();
     setNearestId(null);
+    setDialogue(null);
+    setPanel(null);
     setMode('intro');
   };
 
+  const chooseOption = (option) => {
+    dispatch({
+      type: 'make-choice',
+      choiceKey: `${script.id}:${script.choice.key}`,
+      optionId: option.id,
+      reward: { badge: option.badge },
+    });
+    setPanel(null);
+    openDialogue(option.ending, 'storyteller');
+  };
+
+  const onQuizAnswer = (questionId, optionId, isCorrect) => {
+    dispatch({
+      type: 'answer-question',
+      questionKey: `${script.id}:${questionId}`,
+      optionId,
+      isCorrect,
+      reward: script.rewards.quizCorrect,
+    });
+  };
+
+  const onQuizFinish = (result) => {
+    if (!result.passed) return;
+    completeObjective('reed-challenge');
+    if (result.perfect) {
+      dispatch({ type: 'grant-reward', rewardId: `${script.id}:perfect-quiz`, reward: script.rewards.perfectQuiz });
+    }
+  };
+
   const dialogueDefinition = dialogue ? script.dialogues[dialogue.id] : null;
+  const fragmentIndex = panel?.type === 'fragment' ? script.fragments.findIndex((f) => f.id === panel.id) : -1;
   const settings = QUALITY[quality];
 
   return (
@@ -197,7 +309,9 @@ export default function GameView({ chapter, script }) {
             runtime={runtime.current}
             interactables={interactables}
             onNearestChange={setNearestId}
-            markerTarget={playing ? markerTarget : null}
+            markers={markers}
+            fragments={fragmentStones}
+            reedActive={reedActive}
             talkingTo={dialogue?.with}
             reducedMotion={reducedMotion}
             quality={settings}
@@ -242,6 +356,35 @@ export default function GameView({ chapter, script }) {
           <TouchControls input={runtime.current.input} prompt={nearest?.prompt ?? null} onInteract={interact} />
         )}
       </div>
+
+      {panel?.type === 'fragment' && (
+        <FragmentCard
+          fragment={script.fragments[fragmentIndex]}
+          index={fragmentIndex}
+          total={script.fragments.length}
+          onClose={keepFragment}
+        />
+      )}
+      {panel?.type === 'quiz' && (
+        <QuizPanel
+          questions={questions}
+          passScore={script.quiz.passScore}
+          onAnswer={onQuizAnswer}
+          onFinish={onQuizFinish}
+          onClose={closePanel}
+        />
+      )}
+      {panel?.type === 'choice' && <ChoicePanel choice={script.choice} onChoose={chooseOption} />}
+      {panel?.type === 'complete' && (
+        <CompletionOverlay
+          chapter={chapter}
+          script={script}
+          progress={progress}
+          choiceId={progress.choices[`${script.id}:${script.choice.key}`]}
+          onStay={closePanel}
+          onReplay={restart}
+        />
+      )}
 
       {mode === 'intro' && (
         <IntroOverlay

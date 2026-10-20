@@ -21,6 +21,48 @@ export function ObjectiveMarker({ position, height = 2.6, reducedMotion }) {
   );
 }
 
+const RED_STALKS = [
+  [0, 0, 1.25, 0.05],
+  [0.22, 0.12, 1.05, -0.12],
+  [-0.2, 0.1, 0.95, 0.15],
+  [0.08, -0.22, 1.15, 0.08],
+  [-0.15, -0.18, 0.85, -0.18],
+];
+
+/** The red reed of the song, standing at the water's edge (the spot itself is fictional). */
+export function RedReed({ position, active, reducedMotion }) {
+  const group = useRef(null);
+  const glow = useRef(null);
+  const flame = useRef(null);
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    if (group.current && !reducedMotion) group.current.rotation.z = Math.sin(t * 1.3) * 0.04;
+    if (glow.current) glow.current.intensity = active ? 6 + (reducedMotion ? 0 : Math.sin(t * 5) * 1.5) : 1.2;
+    if (flame.current) {
+      flame.current.visible = active;
+      if (!reducedMotion) flame.current.scale.y = 1 + Math.sin(t * 9) * 0.2;
+    }
+  });
+  const y = terrainHeight(position.x, position.z);
+  return (
+    <group position={[position.x, y, position.z]}>
+      <group ref={group}>
+        {RED_STALKS.map(([x, z, h, tilt], i) => (
+          <mesh key={i} castShadow position={[x, h * 1.1, z]} rotation-z={tilt}>
+            <cylinderGeometry args={[0.025, 0.05, h * 2.2, 5]} />
+            <meshStandardMaterial color="#b8352a" emissive="#5a0f0a" flatShading roughness={0.7} />
+          </mesh>
+        ))}
+        <mesh ref={flame} position={[0, 2.95, 0]}>
+          <coneGeometry args={[0.12, 0.5, 6]} />
+          <meshBasicMaterial color="#ffb347" transparent opacity={0.85} toneMapped={false} />
+        </mesh>
+      </group>
+      <pointLight ref={glow} position={[0, 2.4, 0]} color="#ff7a4a" intensity={1.2} distance={7} decay={1.8} />
+    </group>
+  );
+}
+
 /** A glowing standing stone that holds one fragment of the song (the stone itself is fictional). */
 export function FragmentStone({ position, collected, reducedMotion }) {
   const glow = useRef(null);

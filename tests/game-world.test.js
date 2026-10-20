@@ -71,6 +71,6 @@ describe('chapter 1 script', () => {
     state = getChapterState(chapter1, progress);
     expect(progress.xp).toBe(10);
     expect(state.isDone('meet-storyteller')).toBe(true);
-    expect(chapter1.resolveInteraction('storyteller', state).id).toBe('storyteller-idle');
+    expect(chapter1.resolveInteraction('storyteller', state).id).toBe('storyteller-hint');
   });
 });

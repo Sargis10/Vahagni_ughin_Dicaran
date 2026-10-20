@@ -2,11 +2,11 @@ import { Suspense } from 'react';
 import { FollowCamera } from '../camera/FollowCamera.jsx';
 import { Player } from '../characters/Player.jsx';
 import { Storyteller } from '../characters/Storyteller.jsx';
-import { hearth } from '../world/layout.js';
+import { hearth, redReed } from '../world/layout.js';
 import { terrainHeight } from '../world/terrain.js';
 import { Campfire } from './Campfire.jsx';
 import { Environment } from './Environment.jsx';
-import { FragmentStone, ObjectiveMarker } from './Markers.jsx';
+import { FragmentStone, ObjectiveMarker, RedReed } from './Markers.jsx';
 import { Mountains } from './Mountains.jsx';
 import { SkyDome } from './SkyDome.jsx';
 import { Terrain } from './Terrain.jsx';
@@ -20,8 +20,9 @@ export function GameScene({
   runtime,
   interactables,
   onNearestChange,
-  markerTarget,
+  markers = [],
   fragments = [],
+  reedActive = false,
   talkingTo,
   reducedMotion,
   quality,
@@ -63,9 +64,10 @@ export function GameScene({
           reducedMotion={reducedMotion}
         />
       ))}
-      {markerTarget && (
-        <ObjectiveMarker position={markerTarget.position} height={markerTarget.markerHeight} reducedMotion={reducedMotion} />
-      )}
+      <RedReed position={redReed} active={reedActive} reducedMotion={reducedMotion} />
+      {markers.map((marker) => (
+        <ObjectiveMarker key={marker.id} position={marker.position} height={marker.markerHeight} reducedMotion={reducedMotion} />
+      ))}
       <FollowCamera runtime={runtime} />
     </>
   );
