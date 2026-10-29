@@ -2,7 +2,7 @@ import { VERIFICATION } from './evidence.js';
 
 /**
  * Central source registry, transcribed from the verified research notes
- * (internal/content-research/sources.json, checked 2026-10-20).
+ * (internal/content-research/sources.json, checked 2026-10-20; new sources 2026-10-29).
  *
  * `citation`, `rights` and `verificationNote` are kept exactly as researched.
  * `shortName` is the label used next to claims; `verification.status` summarises
@@ -27,7 +27,7 @@ export const sources = [
     verification: {
       status: VERIFICATION.VERIFIED,
       checkedOn: '2026-10-20',
-      note: 'PDF-ը (463 էջ, սկանավորված պատկերներ, առանց տեքստային շերտի) ներբեռնվել է 2026-10-20-ին։ Ա գիրք, գլ. ԼԱ (ԼԲ)՝ տպագիր էջ 85–86 (PDF-ի 152–153-րդ էջեր), Բ գիրք, գլ. ԺԲ՝ էջ 122 (PDF 189), գլ. ԺԴ՝ էջ 127–128 (PDF 194–195) կարդացվել են անմիջապես էջերի պատկերներից։ archive.org-ի պատճենը էջ առ էջ չի համեմատվել։',
+      note: 'PDF-ը (463 էջ, սկանավորված պատկերներ, առանց տեքստային շերտի) ներբեռնվել է 2026-10-20-ին։ Ա գիրք, գլ. ԼԱ (= 31)՝ տպագիր էջ 85–86 (PDF-ի 152–153-րդ էջեր), Բ գիրք, գլ. ԺԲ՝ էջ 122 (PDF 189), գլ. ԺԴ՝ էջ 127–128 (PDF 194–195) կարդացվել են անմիջապես էջերի պատկերներից։ archive.org-ի պատճենը էջ առ էջ չի համեմատվել։ Տպագրության «ԼԱ (ԼԲ)» ձևի խմբագրական պատճառը դեռ բաց է։',
     },
   },
   {
@@ -69,8 +69,8 @@ export const sources = [
     },
     verification: {
       status: VERIFICATION.PARTIAL,
-      checkedOn: '2026-10-20',
-      note: 'Մետատվյալները՝ arar.sci.am-ի գրառումից։ Էջերը՝ PDF-ի տպագիր էջահամարներից (21 էջ, 146-ից մինչև 166)։ PDF-ի տեքստը վերծանվել է (տառատեսակի կոդավորման տեղաշարժ) և կարդացվել է հիմնականում էջ 146–150-ը։ DOI հղման վերահասցեավորումը չի ստուգվել։',
+      checkedOn: '2026-10-29',
+      note: 'Մետատվյալները՝ arar.sci.am-ի գրառումից։ Էջերը՝ PDF-ի տպագիր էջահամարներից (21 էջ, 146-ից մինչև 166)։ PDF-ի տեքստը վերծանվել է (տառատեսակի կոդավորման տեղաշարժ) և կարդացվել է հիմնականում էջ 146–150-ը։ DOI-ն 2026-10-29-ին վերահասցեավորվել է https://arar.sci.am/dlibra/publication/314593 (OK)։',
     },
   },
   {
@@ -110,6 +110,113 @@ export const sources = [
       status: VERIFICATION.PARTIAL,
       checkedOn: '2026-10-20',
       note: 'Կարդացվել է միայն ընդհանուր էջը (Wayback, 2026-10-11)՝ մետատվյալներ և այն, որ հայերեն ձևը Anahit է։ Ենթաբաժինները (ii. The Cult and its Diffusion և այլն) ՉԵՆ կարդացվել։',
+    },
+  },
+  {
+    id: 'iranica-armenia-iii',
+    kind: 'encyclopedia',
+    shortName: 'Encyclopaedia Iranica, «ARMENIA iii»',
+    title: '«ARMENIA AND IRAN iii. Armenian Religion»',
+    citation:
+      '«ARMENIA AND IRAN iii. Armenian Religion», Encyclopaedia Iranica, online edition.',
+    language: 'անգլերեն',
+    rights: 'Հեղինակային իրավունքով պաշտպանված։',
+    urls: {
+      article: 'https://www.iranicaonline.org/articles/armenia-iii/',
+    },
+    verification: {
+      status: VERIFICATION.PARTIAL,
+      checkedOn: '2026-10-29',
+      note: 'Կարդացվել է 2026-10-29։ Օգտագործված են Արամազդ, Անահիտ oskemayr, Վահագն/Աստղիկ, Կունդ Արամազդ հատվածները։ Ուղիղ կայքը երբեմն Cloudflare 403 է տալիս։',
+    },
+  },
+  {
+    id: 'iranica-armenia-iv',
+    kind: 'encyclopedia',
+    shortName: 'Encyclopaedia Iranica, «ARMENIA iv»',
+    title: '«ARMENIA AND IRAN iv. Iranian influences in Armenian Language»',
+    citation:
+      '«ARMENIA AND IRAN iv. Iranian influences in Armenian Language», Encyclopaedia Iranica, online edition.',
+    language: 'անգլերեն',
+    rights: 'Հեղինակային իրավունքով պաշտպանված։',
+    urls: {
+      article: 'https://www.iranicaonline.org/articles/armenia-iv/',
+    },
+    verification: {
+      status: VERIFICATION.PARTIAL,
+      checkedOn: '2026-10-29',
+      note: 'Կարդացվել է 2026-10-29։ Արամազդ ← Auramazdā։',
+    },
+  },
+  {
+    id: 'iranica-ahura-mazda',
+    kind: 'encyclopedia',
+    shortName: 'Encyclopaedia Iranica, «AHURA MAZDĀ»',
+    title: '«AHURA MAZDĀ»',
+    citation: '«AHURA MAZDĀ», Encyclopaedia Iranica, online edition.',
+    language: 'անգլերեն',
+    rights: 'Հեղինակային իրավունքով պաշտպանված։',
+    urls: {
+      article: 'https://www.iranicaonline.org/articles/ahura-mazda/',
+    },
+    verification: {
+      status: VERIFICATION.PARTIAL,
+      checkedOn: '2026-10-29',
+      note: 'Կարդացվել է 2026-10-29։ Parth. Aramazd ձևը։',
+    },
+  },
+  {
+    id: 'iranica-agathangelos',
+    kind: 'encyclopedia',
+    shortName: 'Encyclopaedia Iranica, «AGATHANGELOS»',
+    title: '«AGATHANGELOS»',
+    citation: '«AGATHANGELOS», Encyclopaedia Iranica, online edition.',
+    language: 'անգլերեն',
+    rights: 'Հեղինակային իրավունքով պաշտպանված։',
+    urls: {
+      article: 'https://www.iranicaonline.org/articles/agathangelos/',
+    },
+    verification: {
+      status: VERIFICATION.PARTIAL,
+      checkedOn: '2026-10-29',
+      note: 'Կարդացվել է 2026-10-29։ Աստղիկ՝ spouse of Vahagn. Ոսկեմայր՝ Անահիտ։',
+    },
+  },
+  {
+    id: 'titus-khorenatsi',
+    kind: 'primary-digital-text',
+    shortName: 'TITUS · Խորենացի (Abełean 1913)',
+    title: 'Movsēs Xorenacʿi, Patmutʿiwn Hayocʿ (TITUS digital text)',
+    citation:
+      'TITUS digital text of Movsēs Xorenacʿi, Patmutʿiwn Hayocʿ, based on Abełean–Yarutʿiwnean, Tiflis 1913 (entered by H. Palandǰian; TITUS version J. Gippert).',
+    language: 'գրաբար',
+    rights: 'Թվային տեքստ՝ գիտական օգտագործման համար. բնագիրը՝ 1913 թ. հրատարակություն։',
+    urls: {
+      text: 'https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokhot.htm',
+    },
+    verification: {
+      status: VERIFICATION.PARTIAL,
+      checkedOn: '2026-10-29',
+      note: '2026-10-29. Ստուգվել են Ա գիրք գլ. 31–32 (ԼԱ–ԼԲ), էջ 85–86, Վահունիք ուղղագրությունը և տոհմաբանությունը։',
+    },
+  },
+  {
+    id: 'melik-pashayan-1963',
+    kind: 'scholarly-monograph',
+    shortName: 'Կ. Մելիք-Փաշայան (1963)',
+    author: 'Karen V. Melik-Pashayan',
+    title: 'The Cult of the Goddess Anahit',
+    citation:
+      'Karen V. Melik-Pashayan, The Cult of the Goddess Anahit, Yerevan, 1963, Institute of Archaeology and Ethnography, Academy of Sciences of Armenian SSR (English summary PDF).',
+    language: 'անգլերեն (ամփոփում)',
+    rights: 'Ժամանակակից գիտական աշխատանք. միայն ամփոփում։',
+    urls: {
+      pdf: 'https://fundamentalarmenology.am/datas/pdfs/664.pdf',
+    },
+    verification: {
+      status: VERIFICATION.PARTIAL,
+      checkedOn: '2026-10-29',
+      note: '2026-10-29. Կարդացվել են Անահիտ/Աշտիշատ և Աստղիկ հատվածները։',
     },
   },
   {

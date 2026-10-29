@@ -19,7 +19,7 @@ export const chapter1Questions = [
     explanation:
       'Երգի հատվածը Խորենացին բերում է Ա գրքի ԼԱ (31-րդ) գլխում (Տփղիս, 1913 թ. հրատարակություն, էջ 85–86)։ Ագաթանգեղոսը Վահագնին հիշատակում է, բայց երգը չի բերում։',
     evidenceType: EVIDENCE.PRIMARY,
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85–86' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85–86' }],
   },
   {
     id: 'q2-three-in-labor',
@@ -29,7 +29,7 @@ export const chapter1Questions = [
     explanation:
       'Երգը սկսվում է այս տողով՝ «Երկնէր երկին, երկնէր երկիր, երկնէր և ծովն ծիրանի» (Տփղիս, 1913, էջ 85, տող 17)։ «Երկնել» նշանակում է ծննդաբերության ցավեր ունենալ։',
     evidenceType: EVIDENCE.PRIMARY,
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 17' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 17' }],
   },
   {
     id: 'q3-reed',
@@ -39,7 +39,7 @@ export const chapter1Questions = [
     explanation:
       'Երգում ծովում երկնում էր կարմիր եղեգնիկը՝ նրա փողից ծուխ ու բոց էր ելնում, և բոցից վազում էր շիկահեր պատանին (էջ 85, տող 17 – էջ 86, տող 3)։',
     evidenceType: EVIDENCE.PRIMARY,
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 1–3' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 1–3' }],
   },
   {
     id: 'q4-appearance',
@@ -53,7 +53,7 @@ export const chapter1Questions = [
     explanation:
       'Երգի վերջին տողերն ասում են, որ պատանին հուր ուներ որպես մազ, բոց՝ որպես մորուք, և նրա աչուկները արեգակներ էին (էջ 86, տող 3–4)։',
     evidenceType: EVIDENCE.PRIMARY,
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 3–4' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 3–4' }],
   },
   {
     id: 'q5-father',
@@ -64,7 +64,7 @@ export const chapter1Questions = [
       'Խորենացին թվարկում է Տիգրանի որդիներին՝ Բաբ, Տիրան, Վահագն (էջ 85, տող 16)։ Ագաթանգեղոսը Արամազդին կոչում է Անահիտի, Նանեի և Միհրի ծնող, բայց Վահագնի մասին նման բան չի ասում։ Ըստ Ա. Պետրոսյանի՝ այս Տիգրանի կերպարում կան Տիգրան Մեծի գծեր, բայց դա գիտական մեկնաբանություն է։',
     evidenceType: EVIDENCE.PRIMARY,
     sourceRefs: [
-      { sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 12–16' },
+      { sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 12–16' },
       { sourceId: 'petrosyan-2021', locator: 'էջ 150' },
     ],
   },
@@ -80,7 +80,7 @@ export const chapter1Questions = [
     explanation:
       'Երգից անմիջապես հետո Խորենացին գրում է, որ լսել են այն «մերովք իսկ ականջօք»՝ երգված փանդիռով (լարային նվագարան) (էջ 86, տող 4–5)։ Սա ցույց է տալիս, որ երգը բանավոր էր տարածված։',
     evidenceType: EVIDENCE.PRIMARY,
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 4–5' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 4–5' }],
   },
   {
     id: 'q7-heracles',
@@ -91,7 +91,7 @@ export const chapter1Questions = [
       'Խորենացին գրում է, որ Վահագնի վիշապամարտի մասին երգում էին Հերակլեսի սխրանքներին շատ նման ձևով (Ա, ԼԱ, էջ 86, տող 5–7)։ Բ գրքում (ԺԲ, էջ 122) Վահունի տոհմի քրմերը Հերակլեսի արձանը կանգնեցնում են Աշտիշատում՝ այն համարելով իրենց նախահայր Վահագնը։',
     evidenceType: EVIDENCE.PRIMARY,
     sourceRefs: [
-      { sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 5–7' },
+      { sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 5–7' },
       { sourceId: KH, locator: 'Բ, գլ. ԺԲ, էջ 122, տող 11–16' },
     ],
   },

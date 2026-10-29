@@ -12,7 +12,7 @@ import { EvidenceBadge } from '../components/ui/EvidenceBadge.jsx';
 import { PageTitle } from '../components/ui/PageTitle.jsx';
 import { paths } from '../app/navigation.js';
 
-const SCHOLARLY_SOURCE_KINDS = ['scholarly-article', 'encyclopedia'];
+const SCHOLARLY_SOURCE_KINDS = ['scholarly-article', 'scholarly-monograph', 'encyclopedia'];
 
 function ClaimItem({ claim }) {
   const t = hy.entry;

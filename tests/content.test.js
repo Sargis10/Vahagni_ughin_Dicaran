@@ -115,15 +115,26 @@ describe('research fidelity', () => {
     expect(cited.has('agathangelos-thomson')).toBe(false);
   });
 
-  it('keeps the Aramazd etymology as needs-research without sources', () => {
+  it('publishes the Aramazd etymology as scholarly interpretation with Iranica sources', () => {
     const claim = getEntryById('aramazd').claims.find((c) => c.id === 'aramazd-etymology');
-    expect(claim.evidenceType).toBe(EVIDENCE.NEEDS_RESEARCH);
-    expect(claim.sourceRefs).toEqual([]);
+    expect(claim.evidenceType).toBe(EVIDENCE.SCHOLARLY);
+    expect(claim.sourceRefs.map((r) => r.sourceId)).toEqual(
+      expect.arrayContaining(['iranica-armenia-iii', 'iranica-armenia-iv', 'iranica-ahura-mazda']),
+    );
   });
 
-  it('flags claims listed as unverified', () => {
+  it('does not flag claims cleared by the 2026-10-29 verification', () => {
     const flagged = entries.flatMap((e) => e.claims.filter((c) => c.requiresCheck).map((c) => c.id));
-    expect(flagged).toEqual(expect.arrayContaining(['vahagn-thunder-war', 'astghik-beloved', 'aramazd-kund']));
+    expect(flagged).not.toEqual(expect.arrayContaining(['vahagn-thunder-war', 'astghik-beloved', 'aramazd-kund']));
+    expect(flagged).toEqual([]);
+  });
+
+  it('uses the verified Վահունիք orthography', () => {
+    const clan = getEntryById('vahnuni-clan');
+    expect(clan.name).toBe('Վահունիներ');
+    expect(clan.name).not.toMatch(/Վահնունի/);
+    expect(clan.claims.find((c) => c.id === 'vahnuni-descent').text).toContain('Վահունիները');
+    expect(getEntryById('vahagn').claims.find((c) => c.id === 'vahagn-vahnuni').text).toContain('Վահունիների');
   });
 
   it('attributes Petrosyan hypotheses to the author', () => {

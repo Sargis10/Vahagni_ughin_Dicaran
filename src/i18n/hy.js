@@ -47,9 +47,11 @@ export const kindLabels = {
 
 export const sourceKindLabels = {
   'primary-edition': 'Սկզբնաղբյուր՝ քննական բնագիր',
+  'primary-digital-text': 'Սկզբնաղբյուր՝ թվային բնագիր',
   'modern-armenian-edition': 'Սկզբնաղբյուր՝ աշխարհաբար թարգմանություն',
   'translation-en': 'Անգլերեն թարգմանություն',
   'scholarly-article': 'Գիտական հոդված',
+  'scholarly-monograph': 'Գիտական մենագրություն',
   encyclopedia: 'Հանրագիտարանային հոդված',
 };
 
@@ -62,6 +64,7 @@ export const sourceUrlLabels = {
   doi: 'DOI',
   article: 'Հոդվածը կայքում',
   archived: 'Արխիվացված պատճեն (Wayback)',
+  text: 'Թվային տեքստ',
 };
 
 export const languageLabels = {

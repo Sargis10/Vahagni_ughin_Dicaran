@@ -9,7 +9,7 @@ import { fragmentSpots, redReed, storytellerSpot } from '../world/layout.js';
 
 const KH = 'khorenatsi-1913';
 const PETROSYAN = 'petrosyan-2021';
-const SONG = { sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85–86' };
+const SONG = { sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85–86' };
 
 export const CHAPTER_ID = 'chapter-1';
 export const QUIZ_PASS_SCORE = 4;
@@ -22,7 +22,7 @@ export const fragments = [
     evidence: EVIDENCE.PRIMARY,
     text: 'Երգում երկնում էին երկինքը, երկիրը և ծիրանի ծովը։ «Երկնել» նշանակում է ծննդաբերության ցավեր ունենալ։',
     quote: SONG_QUOTE,
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 17' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 17' }],
     entrySlug: 'vahagni-tsnund',
   },
   {
@@ -31,7 +31,7 @@ export const fragments = [
     title: 'Կարմիր եղեգնիկը',
     evidence: EVIDENCE.PRIMARY,
     text: 'Ծովում երկունք ուներ նաև կարմիր եղեգնիկը։ Եղեգի փողից ծուխ էր ելնում, բոց էր ելնում, և բոցից վազում էր շիկահեր մի պատանի։',
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 1–3' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 1–3' }],
     entrySlug: 'vahagni-tsnund',
   },
   {
@@ -40,7 +40,7 @@ export const fragments = [
     title: 'Հրե պատանին',
     evidence: EVIDENCE.PRIMARY,
     text: 'Պատանին հուր ուներ որպես մազ, բոց՝ որպես մորուք, իսկ նրա աչուկները արեգակներ էին։',
-    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 3–4' }],
+    sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 3–4' }],
     entrySlug: 'vahagn',
   },
   {
@@ -151,7 +151,7 @@ const dialogues = {
       {
         evidence: EVIDENCE.PRIMARY,
         text: 'Նա գրում է, որ իրենց ականջով լսել են, թե ինչպես ոմանք այս երգը երգում էին փանդիռով։',
-        sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 4–5' }],
+        sourceRefs: [{ sourceId: KH, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 4–5' }],
       },
       fiction('Ես ինքս հորինված պատմող եմ, իսկ այս ափը՝ հորինված վայր։ Բայց այն, ինչ ասում եմ աղբյուրից, կարող ես ստուգել․ նայիր ամեն տողի պիտակին։'),
       fiction('Երգը ցրվել է այս ափով, ինչպես կայծերը կրակից։ Չորս լուսավոր քար կգտնես, և ամեն մեկը մի բեկոր է պահում։ Գնա՛, աշակերտ։'),
