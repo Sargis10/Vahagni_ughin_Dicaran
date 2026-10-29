@@ -1,20 +1,21 @@
 import { EVIDENCE } from '../evidence.js';
 
-// Factual entries, transcribed from internal/content-research/archive-entries.json and
-// khorenatsi-book-1-ch-31.md (checked 2026-10-20). Claim text, evidence types and locators
-// are kept as researched. `requiresCheck` marks claims listed in unverified-claims.md: they
-// keep their evidence type but are also shown as «Պահանջում է ստուգում».
+// Factual entries, transcribed from internal/content-research/archive-entries.json
+// (checked 2026-10-20; verification patch 2026-10-29). Claim text, evidence types and
+// locators follow the research notes. Prefer chapter locators as «Ա, գլ. ԼԱ (= 31)».
 
 const K1913 = 'khorenatsi-1913';
 const AG1983 = 'agathangelos-1983';
 const PETROSYAN = 'petrosyan-2021';
+const IRANICA_III = 'iranica-armenia-iii';
+const TITUS = 'titus-khorenatsi';
 
 /** The only verbatim quotation used on the site. */
 export const SONG_QUOTE = {
   text: 'Երկնէր երկին, երկնէր երկիր, երկնէր և ծովն ծիրանի',
   lang: 'xcl',
   sourceId: K1913,
-  locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 17',
+  locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 17',
 };
 
 export const mythologyEntries = [
@@ -32,7 +33,7 @@ export const mythologyEntries = [
         id: 'birth-song-text',
         text: 'Ծննդյան երգում երկնում են երկինքը, երկիրը և ծիրանի ծովը, եղեգի փողից ծուխ ու բոց է ելնում, և բոցից վազում է պատանին, որի մազերը հուր են, մորուքը՝ բոց, իսկ աչուկները՝ արեգակներ։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 17 – էջ 86, տող 4' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 17 – էջ 86, տող 4' }],
         quote: SONG_QUOTE,
         note: 'Ուղղագրությունը՝ ինչպես տպված է 1913 թ. հրատարակությունում (դասական ուղղագրություն, «և» գրանշանով)։ Երգի մնացած մասը ներկայացվում է միայն վերապատմությամբ։',
       },
@@ -40,19 +41,19 @@ export const mythologyEntries = [
         id: 'birth-song-sons',
         text: 'Խորենացին թվարկում է Տիգրանի որդիներին՝ Բաբ, Տիրան, Վահագն, և ասում, որ Վահագնի մասին «առասպելներ» են պատմում այս երկրում։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 16' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 16' }],
       },
       {
         id: 'birth-song-pandir',
         text: 'Խորենացին գրում է, որ իրենց ականջով լսել են, թե ինչպես ոմանք այս երգը երգում էին փանդիռով (լարային նվագարան)։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 4–5' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 4–5' }],
       },
       {
         id: 'birth-song-dragons',
         text: 'Երգերում պատմվում էր նրա՝ վիշապների դեմ կռվելու և հաղթելու մասին, և նրա սխրանքները համեմատվում էին Հերակլեսի սխրանքների հետ։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 5–7' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 5–7' }],
       },
       {
         id: 'birth-song-iranica',
@@ -92,9 +93,8 @@ export const mythologyEntries = [
       'Ա. Պետրոսյանի վարկածը, թե երգում «երկու» բառը և Ծովինարի անունը անագրամի ձևով «թաքնված» են, նրա անձնական նոր տեսակետն է։ Այլ գիտնականների արձագանքը չի ուսումնասիրվել։',
     ],
     openQuestions: [
-      'Գլխի «ԼԱ (ԼԲ)» կրկնակի համարակալման բացատրությունը։',
+      'Ինչու է տպագրության մեջ երբեմն նշվում «ԼԱ (ԼԲ)». Abełean/TITUS-ում գլ. 31 = ԼԱ և գլ. 32 = ԼԲ առանձին գլուխներ են, բայց փակագծային ձևի խմբագրական պատճառը առաջաբանում չի ստուգվել։',
       'Ա. Պետրոսյանի անագրամի վարկածի ընդունումը կամ քննադատությունը այլ գիտնականների կողմից։',
-      'Խորենացու ԼԱ գլխի վերջին հատվածի տոհմաբանական մանրամասները (էջ 86, տող 9–13)։',
     ],
     relatedIds: ['vahagn', 'tigran-yervandyan', 'vahnuni-clan'],
     chapterIds: ['chapter-1'],
@@ -113,38 +113,38 @@ export const mythologyEntries = [
         id: 'vahagn-son-of-tigran',
         text: 'Խորենացու մոտ Վահագնը Տիգրանի որդին է՝ Բաբի և Տիրանի եղբայրը։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 16' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 16' }],
       },
       {
         id: 'vahagn-birth-song',
         text: 'Ծննդյան երգում երկնում են երկինքը, երկիրը և ծիրանի ծովը, եղեգի փողից ծուխ ու բոց է ելնում, և բոցից վազում է պատանին, որի մազերը հուր են, մորուքը՝ բոց, իսկ աչուկները՝ արեգակներ։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 17 – էջ 86, տող 4' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 17 – էջ 86, տող 4' }],
         quote: SONG_QUOTE,
       },
       {
         id: 'vahagn-pandir',
         text: 'Խորենացին գրում է, որ իրենց ականջով լսել են, թե ինչպես ոմանք այս երգը երգում էին փանդիռով։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 4–5' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 4–5' }],
       },
       {
         id: 'vahagn-dragons',
         text: 'Երգերում պատմվում էր նրա՝ վիշապների դեմ կռվելու և հաղթելու մասին, և նրա սխրանքները համեմատվում էին Հերակլեսի սխրանքների հետ։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 5–7' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 5–7' }],
       },
       {
         id: 'vahagn-statue-georgia',
         text: 'Ասում էին, որ նա աստվածացվել է, և Վրաց աշխարհում նրա հասակի չափով արձան էր կանգնեցված, որին պատվում էին զոհերով։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 7–8' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 7–8' }],
       },
       {
         id: 'vahagn-vahnuni',
-        text: 'Վահագնից է սերում Վահնունիների տոհմը։',
+        text: 'Վահագնից է սերում Վահունիների տոհմը։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 8–9' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 8–9' }],
       },
       {
         id: 'vahagn-edict',
@@ -157,6 +157,13 @@ export const mythologyEntries = [
         text: 'Ագաթանգեղոսը Աշտիշատի Վահևանյան մեհյանը նկարագրում է որպես պաշտամունքի ութերորդ հռչակավոր վայր, որը կոչվում էր «Վիշապաքաղ Վահագնի» անունով։',
         evidenceType: EVIDENCE.PRIMARY,
         sourceRefs: [{ sourceId: AG1983, locator: '§ 809' }],
+      },
+      {
+        id: 'vahagn-royal-sacrifice',
+        text: 'Ագաթանգեղոսի համաձայն՝ Աշտիշատի Վահևանյան մեհյանը Հայոց թագավորների զոհատեղի էր։',
+        evidenceType: EVIDENCE.PRIMARY,
+        sourceRefs: [{ sourceId: AG1983, locator: '§ 809' }],
+        note: 'Հատուկ տոնի անուն կամ օրացույցային օր չի հաստատվել. չգրել «Վահագնի տոնը…»։',
       },
       {
         id: 'vahagn-heracles-statue',
@@ -175,11 +182,13 @@ export const mythologyEntries = [
       },
       {
         id: 'vahagn-thunder-war',
-        text: 'Վահագնը ամպրոպի և պատերազմի աստված է։',
+        text: 'Գիտնականները (օր.՝ Ա. Պետրոսյան, 2021) Վահագնին բնորոշում են որպես ամպրոպի և պատերազմի աստված։ Խորենացու ծննդյան երգում այդ բառերը չկան։',
         evidenceType: EVIDENCE.SCHOLARLY,
-        requiresCheck: true,
-        sourceRefs: [{ sourceId: PETROSYAN, locator: 'ամփոփում, էջ 146–150' }],
-        note: 'Խորենացու ԼԱ գլխում «ամպրոպ» կամ «պատերազմի աստված» բառեր չկան։ Սա գիտական բնորոշում է։',
+        sourceRefs: [
+          { sourceId: PETROSYAN, locator: 'էջ 146–150' },
+          { sourceId: IRANICA_III, locator: 'Vahagn / Vərəθraγna' },
+        ],
+        note: 'Միայն գիտական բնորոշում. սկզբնաղբյուրում ուղղակի չի գրված։',
       },
     ],
     disagreements: [
@@ -188,8 +197,8 @@ export const mythologyEntries = [
       'Ա. Պետրոսյանի վարկածը, թե երգում «երկու» բառը և Ծովինարի անունը անագրամի ձևով «թաքնված» են, նրա անձնական նոր տեսակետն է։ Այլ գիտնականների արձագանքը չի ուսումնասիրվել։',
     ],
     openQuestions: [
-      'Գլխի «ԼԱ (ԼԲ)» կրկնակի համարակալման բացատրությունը։',
-      'Վահագնի տոնի կամ ծեսերի մասին ցանկացած պնդում․ այս հետազոտության մեջ ստուգված չէ։',
+      'Ինչու է տպագրության մեջ երբեմն նշվում «ԼԱ (ԼԲ)»։',
+      'Վահագնի հատուկ տոնի կամ ծեսի մանրամասներ (բացի Աշտիշատի զոհատեղի լինելուց)։',
     ],
     relatedIds: ['vahagn-birth-tradition', 'tigran-yervandyan', 'astghik', 'vahnuni-clan', 'ashtishat'],
     chapterIds: ['chapter-1'],
@@ -225,23 +234,33 @@ export const mythologyEntries = [
       },
       {
         id: 'astghik-beloved',
-        text: 'Աստղիկը Վահագնի սիրեցյալն է կամ զուգակիցը։',
+        text: 'Գիտնականները Աստղիկին համարում են Վահագնի զուգակիցը՝ հիմնվելով «Վահագնի սենյակ» անվան և Աֆրոդիտեի նույնացման վրա։ Սկզբնաղբյուրում ուղղակի «կին» չի գրված։',
         evidenceType: EVIDENCE.SCHOLARLY,
-        requiresCheck: true,
         sourceRefs: [
           { sourceId: AG1983, locator: '§ 809' },
-          { sourceId: K1913, locator: 'Բ, գլ. ԺԴ, էջ 127–128' },
+          { sourceId: 'iranica-agathangelos', locator: 'Asṭłik, spouse of Vahagn' },
+          { sourceId: IRANICA_III, locator: 'Vahagn shared his temple with Asṭłik' },
         ],
-        note: 'Սա եզրակացություն է երկու տվյալից՝ «Վահագնի սենյակ» անվանումից (Ագաթանգեղոս) և Վահագն = Հերակլես, Աֆրոդիտե = Հերակլեսի սիրուհի զուգադրությունից (Խորենացի)։ Սկզբնաղբյուրներում ուղղակիորեն այդպես գրված չէ։',
+        note: 'Ստուգված է որպես գիտական մեկնաբանություն, 2026-10-29։',
+      },
+      {
+        id: 'astghik-etymology',
+        text: 'Գիտնականները Աստղիկ անունը բացատրում են որպես «փոքր աստղ» (ասորերեն kaukabtā-ի թարգմանություն)։',
+        evidenceType: EVIDENCE.SCHOLARLY,
+        sourceRefs: [{ sourceId: IRANICA_III, locator: 'Asṭłik / kaukabtā' }],
+      },
+      {
+        id: 'astghik-vardavar',
+        text: 'Ժամանակակից ազգագրական ավանդույթում Վարդավառը հաճախ կապում են Աստղիկի (և երբեմն Անահիտի) հետ։ Սա ազգագրական մեկնաբանություն է, ոչ Ագաթանգեղոսի ուղղակի վկայություն։',
+        evidenceType: EVIDENCE.SCHOLARLY,
+        sourceRefs: [{ sourceId: 'melik-pashayan-1963', locator: 'Astłik / Ashtishat' }],
+        note: 'Որպես հնագույն փաստ չներկայացնել։ Նախաքրիստոնեական սկզբնաղբյուր դեռ պետք է առանձին փնտրել։',
       },
     ],
     disagreements: [
-      'Աստղիկի մասին հին տեղեկությունները շատ քիչ են։ Ժամանակակից հանրամատչելի պնդումները (օրինակ՝ որ նա սիրո, ջրի կամ աստղերի աստվածուհի էր, կամ Վարդավառի տոնի հետ կապը) այս հետազոտության մեջ չեն ստուգվել։ Մինչև ստուգելը դրանք պետք է նշել որպես «պահանջում է ստուգում»։',
+      'Աստղիկի մասին հին տեղեկությունները քիչ են։ Սիրո/ջրի/աստղերի գործառույթները և Վարդավառի կապը գալիս են գիտական ու ազգագրական գրականությունից, ոչ ուղղակի սկզբնաղբյուրից։',
     ],
-    openQuestions: [
-      'Աստղիկի գործառույթների (սեր, գեղեցկություն, ջուր և այլն) գիտական աղբյուրներ։',
-      'Վարդավառի հետ կապի մասին պնդումների աղբյուրներ։',
-    ],
+    openQuestions: ['Վարդավառ–Աստղիկ կապի նախաքրիստոնեական սկզբնաղբյուր (եթե կա)։'],
     relatedIds: ['vahagn', 'ashtishat'],
   },
   {
@@ -249,7 +268,10 @@ export const mythologyEntries = [
     slug: 'anahit',
     kind: 'deity',
     name: 'Անահիտ',
-    altNames: ['Մեծ Անահիտ տիկին (Ագաթանգեղոս, § 53)'],
+    altNames: [
+      'Մեծ Անահիտ տիկին (Ագաթանգեղոս, § 53)',
+      'Ոսկեմայր Ոսկեծին (?) — գիտական նույնացում § 809-ի հետ',
+    ],
     evidenceType: EVIDENCE.PRIMARY,
     summary:
       'Անահիտը աստվածուհի է, որին Ագաթանգեղոսում Տրդատ արքան անվանում է «մեծ տիկին», ազգի փառքն ու կյանք տվողը և Արամազդի զավակը։ Նրա գլխավոր մեհյանը գտնվում էր Եկեղյաց գավառի Երիզա (Երեզ) ավանում, որտեղ կար նրա ոսկե արձանը։',
@@ -295,13 +317,22 @@ export const mythologyEntries = [
         ],
         note: 'Խորենացին Երիզայում դնում է «Արտեմիսի» արձանը, իսկ Ագաթանգեղոսը նույն վայրում նշում է Անահիտի մեհյանը։ Անահիտ = Արտեմիս նույնացումը արվում է այս համընկնումից և գիտական գրականությունից։',
       },
+      {
+        id: 'anahit-oskemayr',
+        text: 'Ագաթանգեղոսը Աշտիշատի երկրորդ բագինը կոչում է «Ոսկեմայր Ոսկեծին», առանց Անահիտ անունը նշելու։ Գիտնականները (Encyclopaedia Iranica) այդ մակդիրը վերագրում են Անահիտին։',
+        evidenceType: EVIDENCE.SCHOLARLY,
+        sourceRefs: [
+          { sourceId: AG1983, locator: '§ 809' },
+          { sourceId: IRANICA_III, locator: 'oskemayr, Agathangelos 809' },
+          { sourceId: 'iranica-agathangelos', locator: 'golden mother / golden-born goddess' },
+        ],
+      },
     ],
     disagreements: [
       'Անահիտի անունը և պաշտամունքը իրանական ծագում ունեն (Iranica)։ Թե որքանով էր նա հայկական միջավայրում վերաիմաստավորված, գիտնականներից պետք է առանձին ուսումնասիրել, քանի որ Iranica-ի մանրամասն բաժինը չի կարդացվել։',
-      'Աշտիշատի երկրորդ բագինը Ագաթանգեղոսը կոչում է «Ոսկեմայր Ոսկեծին դից», առանց Անահիտ անունը նշելու։ Այն Անահիտի հետ նույնացնելը մեկնաբանություն է։ 1983 թ. հրատարակության ծանոթագրություններում կա այդ մասին հիշատակում, բայց այն մանրամասն չի ստուգվել։',
+      '«Ոսկեմայր Ոսկեծին» = Անահիտ նույնացումը գիտական մեկնաբանություն է (Iranica). § 809-ում Անահիտ անունը չկա։',
     ],
     openQuestions: [
-      '«Ոսկեմայր» բագինի նույնացումը Անահիտի հետ (§ 809)։',
       'Iranica «ANĀHĪD», ii. The Cult and its Diffusion բաժնի բովանդակությունը Հայաստանի մասին։',
     ],
     relatedIds: ['aramazd', 'ashtishat'],
@@ -340,24 +371,31 @@ export const mythologyEntries = [
       },
       {
         id: 'aramazd-kund',
-        text: 'Խորենացին, անունների կրկնության մասին խոսելիս, նշում է, որ Արամազդ անունով մեկից ավելին են եղել, և հիշում է «Կունդ ոմն Արամազդ»։',
+        text: 'Խորենացին գրում է, որ Արամազդ անունով մեկից ավելին են եղել, և հիշում է «Կունդ ոմն Արամազդ»։ Գիտնականները *կունդ*-ը բացատրում են որպես «ճաղատ»։',
         evidenceType: EVIDENCE.PRIMARY,
-        requiresCheck: true,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 9–11' }],
-        note: 'Հատվածը դժվար է մեկնաբանել․ ամփոփումը զգույշ է։ Ճշգրիտ իմաստը պետք է ստուգել թարգմանության կամ մեկնաբանության հետ։',
+        sourceRefs: [
+          { sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 9–11' },
+          { sourceId: TITUS, locator: 'Book 1, ch. 31' },
+          { sourceId: IRANICA_III, locator: 'kund ‘bald’ Aramazd (1.31)' },
+        ],
+        note: 'Տեքստը սկզբնաղբյուր է. «ճաղատ» իմաստը՝ գիտական մեկնաբանություն (Iranica)։',
       },
       {
         id: 'aramazd-etymology',
-        text: 'Արամազդ անունը ծագում է իրանական Ահուրա Մազդա աստծու անունից։',
-        evidenceType: EVIDENCE.NEEDS_RESEARCH,
-        sourceRefs: [],
-        note: 'Լայնորեն ընդունված տեսակետ է, բայց այս աշխատանքում կոնկրետ աղբյուրով չի ստուգվել։',
+        text: 'Գիտնականների համաձայն՝ «Արամազդ» անունը ծագում է իրանական Ահուրա Մազդա աստծու անունից (պարթև. Aramazd / հին պարսկ. Auramazdā)։',
+        evidenceType: EVIDENCE.SCHOLARLY,
+        sourceRefs: [
+          { sourceId: IRANICA_III, locator: 'Aramazd' },
+          { sourceId: 'iranica-armenia-iv', locator: 'Aramazd from Old Pers. Auramazdā' },
+          { sourceId: 'iranica-ahura-mazda', locator: 'Parth. Aramazd' },
+        ],
+        note: 'Ստուգված է որպես ընդունված գիտական ստուգաբանություն, 2026-10-29։',
       },
     ],
     disagreements: [
       'Ագաթանգեղոսը Արամազդին նույնացնում է հունական Զևսի հետ («Զևս Արամազդ»), իսկ Խորենացին Անիում հիշում է «Ոլիմպիական Զևսի» արձանը (Բ, ԺԴ, էջ 127)։ Թե այս հունական նույնացումները ինչ չափով են արտացոլում հայկական պաշտամունքը, և ինչ չափով՝ հեղինակների հելլենիստական կրթությունը, գիտական քննարկման հարց է, որն այստեղ չի ուսումնասիրվել։',
     ],
-    openQuestions: ['Արամազդ – Ահուրա Մազդա ստուգաբանության աղբյուրը։'],
+    openQuestions: [],
     relatedIds: ['anahit'],
   },
   {
@@ -374,13 +412,13 @@ export const mythologyEntries = [
         id: 'tigran-azhdahak',
         text: 'Հայկազուններից այս Տիգրանն է, որ սպանեց Աժդահակին և գերի տարավ նրա ընտանիքը, այդ թվում՝ «վիշապների մայր» Անույշին։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 12–15' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 12–15' }],
       },
       {
         id: 'tigran-sons',
         text: 'Նրա որդիներն են Բաբը, Տիրանը և Վահագնը։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 85, տող 16' }],
+        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85, տող 16' }],
       },
       {
         id: 'tigran-transfer',
@@ -388,11 +426,20 @@ export const mythologyEntries = [
         evidenceType: EVIDENCE.SCHOLARLY,
         sourceRefs: [{ sourceId: PETROSYAN, locator: 'էջ 150' }],
       },
+      {
+        id: 'tigran-legendary',
+        text: 'Գիտնականները Տիգրան Երվանդյանին դիտում են որպես լեգենդար/վիպական կերպար Խորենացու պատմության մեջ (պատմվում է Կյուրոսի ու Մարաստանի Աժդահակի համատեքստում)։ Ճշգրիտ թագավորության տարիներ չենք նշում։',
+        evidenceType: EVIDENCE.SCHOLARLY,
+        sourceRefs: [
+          { sourceId: PETROSYAN, locator: 'էջ 150' },
+          { sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 85' },
+        ],
+      },
     ],
     disagreements: [
-      'Տիգրան Երվանդյանի պատմականությունը և ժամանակաշրջանը վիճելի են։ Այս աշխատանքում թվականներ չեն ստուգվել, ուստի ոչ մի տարեթիվ չի նշվում։',
+      'Պատմականությունը վիճելի է. կայքում տարեթիվ չի նշվում։',
     ],
-    openQuestions: ['Տիգրան Երվանդյանի թվագրում և պատմականություն։'],
+    openQuestions: ['Ճշգրիտ թագավորության տարեթվեր (եթե երբևէ ապահով աղբյուր գտնվի)։'],
     relatedIds: ['vahagn', 'vahagn-birth-tradition'],
     chapterIds: ['chapter-1'],
   },
@@ -400,17 +447,20 @@ export const mythologyEntries = [
     id: 'vahnuni-clan',
     slug: 'vahnuniner',
     kind: 'clan',
-    name: 'Վահնունիներ / Վահունիներ',
-    altNames: ['Վահնունիք (Խորենացի, Ա, ԼԱ)', 'Վահունիք (Խորենացի, Բ, ԺԲ, ԺԴ)'],
+    name: 'Վահունիներ',
+    altNames: ['Վահունիք (Խորենացի, Ա, ԼԱ և Բ, ԺԲ/ԺԴ)'],
     evidenceType: EVIDENCE.PRIMARY,
     summary:
-      'Ըստ Խորենացու՝ Վահագնից սերած տոհմ է, որի անդամները քրմեր էին և Աշտիշատում կանգնեցրին Հերակլես-Վահագնի արձանը։',
+      'Ըստ Խորենացու՝ Վահագնից սերած տոհմ է (Վահունիք), որի անդամները քրմեր էին և Աշտիշատում կանգնեցրին Հերակլես-Վահագնի արձանը։',
     claims: [
       {
         id: 'vahnuni-descent',
-        text: 'Վահագնի սերունդներն են Վահնունիները։',
+        text: 'Վահագնի սերունդներն են Վահունիները։',
         evidenceType: EVIDENCE.PRIMARY,
-        sourceRefs: [{ sourceId: K1913, locator: 'Ա, գլ. ԼԱ (ԼԲ), էջ 86, տող 8–9' }],
+        sourceRefs: [
+          { sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 8–9' },
+          { sourceId: TITUS, locator: 'Book 1, ch. 31: Վահունիք' },
+        ],
       },
       {
         id: 'vahnuni-statue',
@@ -424,13 +474,20 @@ export const mythologyEntries = [
         evidenceType: EVIDENCE.PRIMARY,
         sourceRefs: [{ sourceId: K1913, locator: 'Բ, գլ. ԺԴ, էջ 128, տող 1–4' }],
       },
+      {
+        id: 'vahnuni-genealogy',
+        text: 'Խորենացու ԼԱ գլխի վերջում Վահագնից հետո թվարկվում են Վահունիքը, կրտսեր որդի Առավանից Առավենեանքը, ապա Ներսեհ–Զարեհ–Զարեհավանից գիծը, և Արմոգ–Բագամ–Վահան–Վահե շարքը. Վահեն մեռնում է Ալեքսանդր Մակեդոնացու դեմ ընդվզելով։',
+        evidenceType: EVIDENCE.PRIMARY,
+        sourceRefs: [
+          { sourceId: K1913, locator: 'Ա, գլ. ԼԱ (= 31), էջ 86, տող 9–13' },
+          { sourceId: TITUS, locator: 'Book 1, ch. 31, p. 86' },
+        ],
+      },
     ],
     disagreements: [
-      'Անվան երկու ձևերը (Վահնունի և Վահունի) այս հրատարակությունում հանդիպում են տարբեր գլուխներում։ Թե որն է նախնականը, և արդյոք դա միևնույն տոհմն է, պետք է ստուգել տարընթերցումների ծանոթագրություններում։',
+      'Նախորդ նշումի «Վահնունի» ձևը սխալ ընթերցում էր. Abełean 1913 / TITUS բնագրում ամենուր Վահունիք է։',
     ],
-    openQuestions: [
-      'Էջ 86, տող 9-ի և էջ 122, տող 11-ի ճշգրիտ ուղղագրությունը և տարընթերցումները (պատկերի որակը սահմանափակ է)։',
-    ],
+    openQuestions: [],
     relatedIds: ['vahagn', 'ashtishat'],
   },
   {
@@ -462,11 +519,22 @@ export const mythologyEntries = [
         evidenceType: EVIDENCE.PRIMARY,
         sourceRefs: [{ sourceId: K1913, locator: 'Բ, գլ. ԺԲ, էջ 122, տող 14–16' }],
       },
+      {
+        id: 'ashtishat-modern-location',
+        text: 'Ժամանակակից գիտական/հանրագիտարանային գրականությունը Աշտիշատը տեղադրում է պատմական Տարոնում (այժմ՝ Մուշի մարզի շրջակայք, Թուրքիա)։ Ճշգրիտ հնագիտական կոորդինատ այս աշխատանքում չի ստուգվել։',
+        evidenceType: EVIDENCE.SCHOLARLY,
+        sourceRefs: [
+          { sourceId: AG1983, locator: '§ 809 (պատմական տեղը)' },
+          { sourceId: IRANICA_III, locator: 'temple at Aštišat' },
+          { sourceId: 'melik-pashayan-1963', locator: 'Ashtishat, Taron, Mt. Qarqe' },
+        ],
+        note: 'Քարտեզի վրա չդնել ճշգրիտ կետ. պահել սխեմատիկ «պատմական Տարոն»։',
+      },
     ],
     disagreements: [
-      'Աշտիշատի ճշգրիտ ժամանակակից տեղադրությունը այս աշխատանքում չի ստուգվել։ Քարտեզի վրա այն կարելի է ցույց տալ միայն որպես «պատմական Տարոն, Եփրատի մոտ», առանց ճշգրիտ կետի, մինչև ստուգելը։',
+      'Պատմական տեղը՝ Տարոն, Եփրատի մոտ (սկզբնաղբյուր)։ Ժամանակակից ճշգրիտ կետը միայն գիտական/երկրորդային է և չպետք է քարտեզին կոորդինատով դրվի մինչև հնագիտական հրապարակման ստուգումը։',
     ],
-    openQuestions: ['Ժամանակակից տեղադրություն և հնագիտական տվյալներ։'],
+    openQuestions: ['Աշտիշատի ճշգրիտ հնագիտական կոորդինատ և պեղումների հրապարակում։'],
     relatedIds: ['vahagn', 'astghik', 'vahnuni-clan'],
   },
 ];
