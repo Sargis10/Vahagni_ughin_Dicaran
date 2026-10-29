@@ -29,16 +29,59 @@ Backend չկա։
 
 ## Աշխատեցնել տեղում
 
-Պահանջվում է Node.js ≥ 22.12 (տես՝ `.nvmrc`) և WebGL աջակցող զննարկիչ։
+Պահանջվում է **Node.js ≥ 22.12** (տես՝ `.nvmrc` և `package.json` → `engines`), **Git**, և WebGL աջակցող զննարկիչ։  
+`package-lock.json`-ը commit արված է․ նախընտրելի է `npm ci` (մաքուր, կրկնելի տեղադրում)։
 
 ```bash
-npm install
-npm run dev       # մշակման սերվեր՝ http://localhost:5173
+git clone https://github.com/Sargis10/Vahagni_ughin_Dicaran.git
+cd Vahagni_ughin_Dicaran
+npm ci
+npm run dev       # http://localhost:5173
+```
+
+Ստուգումներ (ըստ ցանկության)՝
+
+```bash
 npm test          # Vitest թեստեր
 npm run lint      # ESLint
 npm run build     # արտադրական հավաքում dist/ թղթապանակում
 npm run preview   # հավաքված տարբերակի դիտում՝ http://localhost:4173
 ```
+
+Եթե Node-ը սխալ տարբերակ է, `npm ci`-ն կկանգնի `engines` սխալով (տես `.npmrc` → `engine-strict`)։ Տեղադրեք Node ≥ 22.12, ապա կրկնեք։
+
+LAN ցուցադրության համար (ըստ ցանկության)՝ `npm run dev -- --host`։ Սովորական տեղային աշխատանքի համար host պետք չէ։
+
+### Windows (PowerShell) — կարևոր
+
+Երբեմն PowerShell-ը արգելում է `npm.ps1`-ը (`ExecutionPolicy`)՝ սխալի տեսքով՝  
+`npm.ps1 cannot be loaded because running scripts is disabled on this system`։
+
+**Լուծում A (արագ, առանց քաղաքականություն փոխելու) — օգտագործեք `npm.cmd`.**
+
+```powershell
+git clone https://github.com/Sargis10/Vahagni_ughin_Dicaran.git
+cd Vahagni_ughin_Dicaran
+npm.cmd ci
+npm.cmd run dev
+```
+
+Բացեք զննարկիչում՝ `http://localhost:5173` (գլխավոր) և `http://localhost:5173/play` (խաղ)։
+
+**Լուծում B — թույլատրել սկրիպտներ միայն այս օգտատիրոջ համար.**
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+Փակեք և նորից բացեք PowerShell-ը, ապա օգտագործեք սովորական `npm`՝
+
+```powershell
+npm ci
+npm run dev
+```
+
+Node ներբեռնեք [nodejs.org](https://nodejs.org/) (LTS 22.x կամ ավելի նոր ≥ 22.12)։ Git՝ [git-scm.com](https://git-scm.com/)։
 
 ## Կառուցվածք
 
@@ -61,4 +104,6 @@ tests/                 Vitest թեստեր
 
 **Vahagni ughin · Ditsashkharh** ("Vahagn's Path · World of Gods") is an educational web app about Armenian mythology. It combines a source-backed archive with a playable 3D chapter about the Vahagn birth tradition. The UI is in Armenian. Every claim is labelled as primary source, scholarly view (with author), fiction, or needs checking.
 
-Run it with `npm install`, then `npm run dev`, `test`, `lint`, `build` or `preview`. Requires Node ≥ 22.12 and a WebGL-capable browser.
+Requires Node ≥ 22.12, Git, and a WebGL-capable browser. Preferred: `npm ci` then `npm run dev` → http://localhost:5173.
+
+**Windows PowerShell:** if `npm.ps1` is blocked by ExecutionPolicy, use `npm.cmd ci` / `npm.cmd run dev`, or run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` once, then reopen PowerShell.
