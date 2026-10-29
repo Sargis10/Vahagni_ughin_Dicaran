@@ -36,10 +36,10 @@ export const sources = [
     shortName: 'Ագաթանգեղոս (Երևան, 1983)',
     title: 'Ագաթանգեղոս, Հայոց պատմություն',
     citation:
-      'Ագաթանգեղոս, Հայոց պատմություն. քննական բնագիրը՝ Գ. Տեր-Մկրտչյանի և Ս. Կանայանցի, աշխարհաբար թարգմանությունը և ծանոթագրությունները՝ Ա. Տեր-Ղևոնդյանի, Երևան, 1983։',
+      'Ագաթանգեղոս, Հայոց պատմություն․ քննական բնագիրը՝ Գ. Տեր-Մկրտչյանի և Ս. Կանայանցի, աշխարհաբար թարգմանությունը և ծանոթագրությունները՝ Ա. Տեր-Ղևոնդյանի, Երևան, 1983։',
     language: 'գրաբար + հայերեն',
     rights:
-      'Գրաբար քննական բնագիրը (Տփղիս, 1909) հանրային սեփականություն է։ Ա. Տեր-Ղևոնդյանի 1983 թ. աշխարհաբար թարգմանությունը կարող է պաշտպանված լինել. դրանից չմեջբերել։',
+      'Գրաբար քննական բնագիրը (Տփղիս, 1909) հանրային սեփականություն է։ Ա. Տեր-Ղևոնդյանի 1983 թ. աշխարհաբար թարգմանությունը կարող է պաշտպանված լինել․ դրանից չմեջբերել։',
     urls: {
       item: 'https://archive.org/details/agathangelos11',
       ocrText: 'https://archive.org/download/agathangelos11/agathangelos11_djvu.txt',
@@ -61,7 +61,7 @@ export const sources = [
     citationLatin:
       'Petrosyan A., “The Song of Vahagn” and the Armenian Epic (A Hypothesis on the Formation of the Armenian Epic), Banber Hayagitutʻyan / Review of Armenian Studies, 2021, no. 3 (27), pp. 146–166.',
     language: 'հայերեն (ռուս. և անգլ. ամփոփումներով)',
-    rights: 'Ժամանակակից գիտական հոդված. միայն ամփոփում, առանց երկար մեջբերումների։',
+    rights: 'Ժամանակակից գիտական հոդված․ միայն ամփոփում, առանց երկար մեջբերումների։',
     urls: {
       catalog: 'https://arar.sci.am/dlibra/publication/314593/edition/289051?language=hye',
       pdf: 'http://arar.sci.am/Content/289051/147-167.pdf',
@@ -139,7 +139,7 @@ export const sources = [
     citation:
       'Moses Khorenats‘i. History of the Armenians. Translation and commentary by Robert W. Thomson. Cambridge, Mass.: Harvard University Press, 1978; revised edition: Ann Arbor, 2007.',
     language: 'անգլերեն',
-    rights: 'Հեղինակային իրավունքով պաշտպանված. մեջբերումներ չանել։',
+    rights: 'Հեղինակային իրավունքով պաշտպանված․ մեջբերումներ չանել։',
     urls: {},
     verification: {
       status: VERIFICATION.UNVERIFIED,

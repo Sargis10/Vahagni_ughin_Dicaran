@@ -41,7 +41,7 @@ export const locations = [
     isFictional: true,
     position: { x: 55, y: 28 },
     description:
-      'Մատենագիրների հորինված դարան, որը խաղում ներկայացնում է արխիվը։ Բացահայտեք առնվազն երեք գրառում՝ այս վայրը լրացնելու համար։',
+      'Մատենագիրների հորինված դարան, որը խաղում ներկայացնում է արխիվը։ Բացահայտիր առնվազն երեք գրառում՝ այս վայրը լրացնելու համար։',
     unlockWhen: { always: true },
     completeWhen: { discovered: 3 },
     action: { type: 'link', to: '/archive' },

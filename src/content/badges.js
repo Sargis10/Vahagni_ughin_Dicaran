@@ -10,7 +10,7 @@ export const badges = [
   {
     id: 'sharp-eye',
     name: 'Սուր աչք',
-    description: 'Եղեգի մարտահրավերի բոլոր հարցերին ճիշտ ես պատասխանել մեկ փորձով։',
+    description: 'Եղեգի փորձության բոլոր հարցերին ճիշտ ես պատասխանել մեկ փորձով։',
     chapterId: 'chapter-1',
     icon: 'eye',
   },
